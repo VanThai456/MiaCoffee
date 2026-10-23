@@ -1,0 +1,89 @@
+# QUY CHUẨN PHÁT TRIỂN WEBSITE QUÁN CÀ PHÊ
+
+## 1. Quy chuẩn thiết kế UI/UX
+
+- Thiết kế giao diện theo phong cách hiện đại, chuyên nghiệp, có tính thẩm mỹ cao, tham khảo khả năng tạo UI của MCP Stitch.
+- Không sao chép máy móc các mẫu có sẵn. Cần có bản sắc thương hiệu riêng cho quán cà phê.
+- Sử dụng thiết kế nhất quán về màu sắc, typography, spacing, border radius, hình ảnh và animation.
+- Ưu tiên bố cục trực quan, hình ảnh chất lượng cao, hiệu ứng tinh tế và trải nghiệm người dùng tốt.
+- Responsive hoàn chỉnh trên desktop, tablet và mobile.
+- Các trang phải có chung hệ thống thiết kế, Header, Footer và các thành phần dùng chung.
+- Tránh giao diện đại trà, bố cục lặp lại đơn điệu, hiệu ứng quá mức hoặc làm chậm website.
+- Nếu có MCP Stitch, sử dụng nó để tham khảo hoặc tạo thiết kế UI trước khi triển khai code.
+
+## 2. Quy chuẩn kiến trúc và Backend
+
+- Giai đoạn hiện tại chỉ tập trung phát triển frontend; chưa triển khai Backend hoặc Database.
+- Kiến trúc phải sẵn sàng tích hợp REST API trong tương lai, không phụ thuộc chặt vào dữ liệu giao diện.
+- Tách biệt UI components, dữ liệu, logic nghiệp vụ và lớp giao tiếp API.
+- Không gọi API trực tiếp bên trong các component giao diện.
+- Tạo lớp services/repositories riêng để sau này có thể thay nguồn dữ liệu mà không phải sửa toàn bộ giao diện.
+- Trong giai đoạn phát triển, sử dụng dữ liệu mẫu có cấu trúc rõ ràng và dễ thay thế bằng API thật.
+- Không giả lập rằng dữ liệu đã được lưu lên máy chủ khi Backend chưa tồn tại.
+
+## 3. Quy chuẩn cấu trúc mã nguồn
+
+- Sử dụng React + Vite và JavaScript hoặc TypeScript nhất quán trong toàn dự án.
+- Phân chia rõ ràng các thư mục:
+  - `pages/`: Các trang của website.
+  - `components/`: Các thành phần giao diện dùng chung.
+  - `features/`: Các nhóm chức năng như menu, không gian, tuyển dụng.
+  - `services/`: Lớp giao tiếp API.
+  - `data/`: Dữ liệu mẫu trong giai đoạn chưa có Backend.
+  - `assets/`: Hình ảnh, icon và tài nguyên tĩnh.
+  - `styles/`: Design tokens, CSS toàn cục và kiểu dùng chung.
+- Mỗi module có nhiệm vụ rõ ràng, hạn chế file quá dài hoặc chứa nhiều logic không liên quan.
+- Ưu tiên component nhỏ, có thể tái sử dụng, dễ đọc, dễ kiểm thử và bảo trì.
+- Không tạo abstraction hoặc thư mục quá phức tạp khi chưa cần thiết.
+- Không lặp lại code giữa các trang nếu có thể dùng component chung.
+
+## 4. Quy chuẩn dữ liệu và Component sản phẩm
+
+- Mỗi sản phẩm đồ uống phải được biểu diễn bằng một đối tượng dữ liệu riêng và hiển thị thông qua component dùng chung, ví dụ `ProductCard`.
+- Không viết cứng tên món, giá, mô tả, danh mục hoặc đường dẫn ảnh trực tiếp trong JSX.
+- Dữ liệu sản phẩm phải có cấu trúc thống nhất, tối thiểu gồm:
+  - `id`
+  - `name`
+  - `description`
+  - `price`
+  - `categoryId`
+  - `image`
+  - `isFeatured`
+  - `isAvailable`
+- Các component nhận dữ liệu qua props; không tự quản lý danh sách sản phẩm riêng bên trong từng component.
+- Danh sách sản phẩm, hình ảnh, danh mục và trạng thái hiển thị phải có thể lấy từ API trong tương lai.
+- Dùng ID ổn định để xác định sản phẩm, không dùng vị trí phần tử trong mảng làm định danh.
+- Đường dẫn ảnh phải được lấy từ dữ liệu. Hỗ trợ ảnh dự phòng khi ảnh bị lỗi hoặc thiếu.
+- Các nội dung có khả năng được Admin chỉnh sửa như banner, tiêu đề, mô tả, hình ảnh, giá và thông tin tuyển dụng cũng phải được tổ chức thành dữ liệu có cấu trúc.
+
+## 5. Quy chuẩn tích hợp phần mềm quản trị trong tương lai
+
+- Website khách hàng và phần mềm quản trị là hai ứng dụng riêng biệt.
+- Phần mềm quản trị sẽ dùng Backend API để thêm, sửa, xóa sản phẩm và cập nhật hình ảnh, danh mục, banner cùng các nội dung được phép quản lý.
+- Website khách hàng đọc dữ liệu từ cùng nguồn Backend API để hiển thị nội dung mới nhất.
+- Không thiết kế cơ chế để phần mềm quản trị sửa trực tiếp file JSX hoặc mã nguồn frontend của website.
+- Không dùng localStorage làm nguồn dữ liệu chính cho menu dùng chung giữa nhiều người dùng.
+- Thiết kế sẵn trạng thái loading, empty, error và cơ chế hiển thị dữ liệu dự phòng phù hợp.
+- Những chức năng ghi dữ liệu thật chỉ được triển khai khi Backend đã hỗ trợ.
+
+## 6. Quy chuẩn chất lượng
+
+- Code phải rõ ràng, có tên biến và tên hàm dễ hiểu.
+- Không để lỗi console, lỗi import hoặc đường dẫn tài nguyên.
+- Không tạo nút bấm hoặc chức năng chỉ để trang trí mà không có hành vi phù hợp.
+- Tối ưu kích thước ảnh, lazy loading khi phù hợp và hạn chế thư viện không cần thiết.
+- Kiểm tra responsive, điều hướng, tìm kiếm và lọc dữ liệu.
+- Không đưa API key, mật khẩu hoặc thông tin bí mật vào frontend.
+- Sau mỗi giai đoạn, kiểm tra hoạt động của dự án trước khi tiếp tục phát triển.
+
+## 7. Quy trình làm việc của AI
+
+1. Phân tích yêu cầu và cấu trúc hiện có trước khi code.
+2. Đề xuất cấu trúc thư mục và mô hình dữ liệu.
+3. Xây dựng design system và các component dùng chung.
+4. Phát triển từng trang theo thứ tự đã thống nhất.
+5. Kiểm tra lỗi và responsive sau mỗi giai đoạn.
+6. Báo cáo những file đã tạo hoặc sửa, các chức năng đã hoàn thành và những phần còn thiếu.
+7. Không tự ý thay đổi kiến trúc hoặc cài thêm thư viện lớn nếu chưa có lý do rõ ràng.
+
+**Nguyên tắc bắt buộc:** Giao diện, dữ liệu và logic phải được tách biệt. Website phải hoạt động bằng dữ liệu mẫu trước khi có Backend, đồng thời có thể chuyển sang dữ liệu API thật mà không cần viết lại toàn bộ giao diện.

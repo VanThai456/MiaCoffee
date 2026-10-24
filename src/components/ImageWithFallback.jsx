@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FALLBACK_PRODUCT_IMAGE } from '../data/menuData';
+import { cleanGoogleMapsImageUrl } from '../utils/imageUrlHelper';
 
 /**
  * Image component with automatic fallback handling
- * Solves network / broken image errors gracefully
+ * Solves network / broken image errors gracefully and supports Google Maps / Google Photos URLs
  */
 export default function ImageWithFallback({
   src,
@@ -13,8 +14,15 @@ export default function ImageWithFallback({
   loading = 'lazy',
   ...props
 }) {
-  const [imgSrc, setImgSrc] = useState(src);
+  const normalizedSrc = cleanGoogleMapsImageUrl(src);
+  const [imgSrc, setImgSrc] = useState(normalizedSrc);
   const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    const nextSrc = cleanGoogleMapsImageUrl(src);
+    setImgSrc(nextSrc);
+    setHasError(false);
+  }, [src]);
 
   const handleError = () => {
     if (!hasError) {
@@ -29,6 +37,7 @@ export default function ImageWithFallback({
       alt={alt}
       onError={handleError}
       loading={loading}
+      referrerPolicy="no-referrer"
       className={className}
       {...props}
     />

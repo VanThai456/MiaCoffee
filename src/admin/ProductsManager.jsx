@@ -1,9 +1,10 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { adminProductsService } from '../services/adminProductsService';
 import { adminAuditService } from '../services/adminAuditService';
 import ImageWithFallback from '../components/ImageWithFallback';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ImageCropperModal from '../components/ImageCropperModal';
+import { cleanGoogleMapsImageUrl } from '../utils/imageUrlHelper';
 
 /**
  * ProductsManager Component
@@ -760,11 +761,12 @@ export default function ProductsManager() {
                           type="url"
                           value={formData.image_url}
                           onChange={(e) => {
-                            const url = e.target.value;
+                            const raw = e.target.value;
+                            const url = cleanGoogleMapsImageUrl(raw);
                             setFormData({ ...formData, image_url: url });
                             setImagePreview(url);
                           }}
-                          placeholder="https://example.com/hinh-anh-mon.jpg"
+                          placeholder="Dán link ảnh (hỗ trợ Google Maps, Google Drive, ảnh web...)"
                           className="flex-1 bg-[#0c1410] border border-white/15 rounded-xl px-3.5 py-2.5 text-white placeholder-white/30 text-xs sm:text-sm focus:outline-none focus:border-[#92f7c3] transition-all"
                         />
                         {formData.image_url && (

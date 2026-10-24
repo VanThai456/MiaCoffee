@@ -1,7 +1,8 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { adminGalleryService } from '../services/adminGalleryService';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ImageWithFallback from '../components/ImageWithFallback';
+import { cleanGoogleMapsImageUrl } from '../utils/imageUrlHelper';
 
 const CATEGORIES = [
   { id: 'all', label: 'Tất cả ảnh' },
@@ -427,19 +428,22 @@ CREATE POLICY "Allow authenticated delete gallery" ON gallery_images FOR DELETE 
                     type="url"
                     value={formUrl}
                     onChange={(e) => {
-                      setFormUrl(e.target.value);
-                      setPreviewSrc(e.target.value);
+                      const raw = e.target.value;
+                      const url = cleanGoogleMapsImageUrl(raw);
+                      setFormUrl(url);
+                      setPreviewSrc(url);
                     }}
-                    placeholder="https://example.com/hinh-anh.jpg"
+                    placeholder="Dán link ảnh (hỗ trợ Google Maps, Google Drive, ảnh web...)"
                     className="input-field text-xs"
                   />
                   {previewSrc && (
-                    <img
-                      src={previewSrc}
-                      alt="Preview"
-                      className="h-36 mx-auto rounded-xl object-cover mt-2 border border-white/15"
-                      onError={() => setPreviewSrc('')}
-                    />
+                    <div className="mt-2 flex justify-center">
+                      <ImageWithFallback
+                        src={previewSrc}
+                        alt="Preview"
+                        className="h-36 mx-auto rounded-xl object-cover border border-white/15"
+                      />
+                    </div>
                   )}
                 </div>
               )}

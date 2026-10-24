@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 
 /**
  * Build a smooth S-curve connecting the centers of the alternating circular frames.
@@ -244,6 +244,7 @@ export default function HighlightsTimeline({ items }) {
                         objectPosition: '50% 50%'
                       }}
                       loading="lazy"
+                      referrerPolicy="no-referrer"
                       onLoad={updateGeometry}
                     />
                   </div>

@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { brandInfo } from '../data/brandData';
 import { menuService } from '../services/menuService';
 import SectionHeading from '../components/SectionHeading';
@@ -132,6 +132,7 @@ export default function Home({ onNavigate }) {
             <img
               src={brandInfo.heroImage}
               alt="Toàn cảnh MIA COFFEE về đêm"
+              referrerPolicy="no-referrer"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-90 group-hover:brightness-100"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
@@ -158,6 +159,7 @@ export default function Home({ onNavigate }) {
             <img
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuAavs3BoaSNZ3jP6O6kv0ImbMrJ7yrcSOcdewHBBcUSfCXrl9nkfjY3NOrZrSxMUxcKR6TYFVgvoSU_AooWR3Qf77HE7_SD8ObX2NKR-XDO-1350BPGy6K0NTO1p4SKY2UBB33fcHKLNNTHmJBQvbcze7VXsAIBd4SCQGXHnhyz4HdNbdz3yXbyCo3-8G6koLIQO-DnbBoe72WQNw9hHAz4Jy0jU6CnzpDZ8DEZ5uIbYoPDFS9Sa3CQ"
               alt="Khu Vực Hồ Cá"
+              referrerPolicy="no-referrer"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 to-transparent" />
@@ -179,6 +181,7 @@ export default function Home({ onNavigate }) {
             <img
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKXJgdmhHnLXaXltr0y80lpPhakfha-dzwB84tejQRqeQR9ZESkVAWDXwQCTjytrdFyzcSuBa0ioICW-lGfbPUxPt8GsgD62tZKctiJwsOnR_y1HF_F4mKM0z53rsjDWrVyI9dYs_05UA69lo0D1zAdLGKKmGcFm_nRpu9RQ-pvb5n80ErP-Zr671tdPlOaUTEcxatBwvce3WMzVX5Nq3Yn6QFSYvIaX5jnfaKNhujSuqoqzNbr1D-"
               alt="2 Phòng Lạnh Học Hành & Họp Bàn"
+              referrerPolicy="no-referrer"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 to-transparent" />

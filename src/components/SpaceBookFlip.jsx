@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 /**
  * 8 Space Photos from Google Maps (MIA COFFEE Trà Vinh)
@@ -653,6 +653,7 @@ function BookPageHalfPhoto({ photo, side = 'left', bookDims, isBack = false }) {
           src={photo.url}
           alt={photo.title}
           className="absolute block"
+          referrerPolicy="no-referrer"
           style={{
             width: `${imgW}px`,
             height: `${imgH}px`,
@@ -765,6 +766,7 @@ function BookPagePortraitPhoto({ photo }) {
           src={photo.url}
           alt={photo.title}
           className="w-full h-full object-cover"
+          referrerPolicy="no-referrer"
           loading="lazy"
         />
       </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { adminProductsService } from '../services/adminProductsService';
 import LoadingSpinner from '../components/LoadingSpinner';
 
@@ -37,6 +37,16 @@ export default function CategoriesManager() {
   useEffect(() => {
     loadCategories();
   }, []);
+
+  const generateSlug = (text) => {
+    return (text || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/đ/g, 'd')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+  };
 
   const openAdd = () => {
     setEditingCat(null);
@@ -122,7 +132,7 @@ export default function CategoriesManager() {
 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-['Playfair_Display'] text-white font-bold">
+          <h2 className="text-2xl font-['Fraunces'] text-white font-bold">
             Quản Lý Danh Mục
           </h2>
           <p className="text-xs text-white/60">
@@ -281,7 +291,7 @@ export default function CategoriesManager() {
           >
             {/* Modal Header */}
             <div className="px-5 sm:px-6 py-4 bg-[#14201a] border-b border-white/10 flex items-center justify-between shrink-0">
-              <h3 className="text-base sm:text-lg font-['Playfair_Display'] text-white font-bold">
+              <h3 className="text-base sm:text-lg font-['Fraunces'] text-white font-bold">
                 {editingCat ? 'Chỉnh Sửa Danh Mục' : 'Thêm Danh Mục Mới'}
               </h3>
               <button
@@ -305,9 +315,32 @@ export default function CategoriesManager() {
                     type="text"
                     required
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) => {
+                      const name = e.target.value;
+                      setFormData(prev => ({
+                        ...prev,
+                        name,
+                        slug: !editingCat ? generateSlug(name) : prev.slug
+                      }));
+                    }}
                     placeholder="Ví dụ: Cà phê pha phin"
                     className="w-full bg-[#0c1410] border border-white/15 rounded-xl px-3.5 py-2.5 text-white placeholder-white/30 text-xs sm:text-sm focus:outline-none focus:border-[#92f7c3] focus:ring-1 focus:ring-[#92f7c3] transition-all"
+                  />
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-white/90 font-semibold text-xs">
+                      Mã Định Danh (Slug)
+                    </label>
+                    <span className="text-[10px] text-white/40">Tự tạo theo tên (dùng cho URL)</span>
+                  </div>
+                  <input
+                    type="text"
+                    value={formData.slug}
+                    onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                    placeholder="vi-du: ca-phe-pha-phin"
+                    className="w-full bg-[#0c1410] border border-white/15 rounded-xl px-3.5 py-2.5 text-white font-mono placeholder-white/30 text-xs sm:text-sm focus:outline-none focus:border-[#92f7c3] transition-all"
                   />
                 </div>
 

@@ -34,7 +34,7 @@ export const recruitmentHighlights = {
     },
     {
       id: "shift-evening",
-      name: "Ca 3: Chiều Tối (17:00 – 22:30)",
+      name: "Ca 3: Chiều Tối (17:00 – 22:00)",
       desc: "Phục vụ nhóm bạn tán gẫu vỉa hè & gia đình thư giãn sân vườn",
       suitableFor: "Sinh viên học ban ngày, rảnh buổi tối kiếm thêm thu nhập"
     },
@@ -87,7 +87,7 @@ export const jobPositions = [
     type: "Part-time linh hoạt / Full-time",
     salary: "24.000đ – 28.000đ/giờ + Thưởng chuyên cần",
     slots: "05 người",
-    shifts: "Ca sáng (06:00 – 11:30), Ca chiều (11:30 – 17:00), Ca tối (17:00 – 22:30)",
+    shifts: "Ca sáng (06:00 – 11:30), Ca chiều (11:30 – 17:00), Ca tối (17:00 – 22:00)",
     experienceRequired: "Không cần kinh nghiệm – Đào tạo từ đầu",
     interviewMode: "Đến trực tiếp quán phỏng vấn",
     requirements: [

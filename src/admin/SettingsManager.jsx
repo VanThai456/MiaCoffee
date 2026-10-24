@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { adminSettingsService } from '../services/adminSettingsService';
 import LoadingSpinner from '../components/LoadingSpinner';
 
@@ -71,7 +71,7 @@ export default function SettingsManager() {
       )}
 
       <div>
-        <h2 className="text-2xl font-['Playfair_Display'] text-white font-bold">
+        <h2 className="text-2xl font-['Fraunces'] text-white font-bold">
           Cấu Hình Thông Tin Quán
         </h2>
         <p className="text-xs text-white/60">

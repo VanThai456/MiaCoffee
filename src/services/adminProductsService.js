@@ -28,25 +28,77 @@ export const adminProductsService = {
   async createCategory(categoryData) {
     if (!supabase) throw new Error("Chưa kết nối Supabase.");
 
+    // Tự động tạo slug chuẩn SEO từ tên nếu chưa có hoặc rỗng
+    let slug = categoryData.slug?.trim();
+    if (!slug && categoryData.name) {
+      slug = categoryData.name
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '');
+    }
+
+    if (!slug) {
+      slug = 'danh-muc-' + Date.now().toString().slice(-4);
+    }
+
+    const payload = {
+      name: categoryData.name.trim(),
+      slug: slug,
+      description: categoryData.description || '',
+      sort_order: Number(categoryData.sort_order) || 0,
+      is_active: categoryData.is_active !== false
+    };
+
     const { data, error } = await supabase
       .from('categories')
-      .insert([categoryData])
+      .insert([payload])
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      // Nếu trùng slug, gắn thêm hậu tố số ngẫu nhiên để tránh lỗi duplicate key
+      if (error.code === '23505' || error.message?.includes('duplicate key')) {
+        payload.slug = `${slug}-${Date.now().toString().slice(-4)}`;
+        const retry = await supabase.from('categories').insert([payload]).select().single();
+        if (retry.error) throw retry.error;
+        return retry.data;
+      }
+      throw error;
+    }
     return data;
   },
 
   async updateCategory(id, categoryData) {
     if (!supabase) throw new Error("Chưa kết nối Supabase.");
 
+    const payload = { ...categoryData };
+    if (payload.name) payload.name = payload.name.trim();
+
+    if (payload.slug !== undefined) {
+      if (!payload.slug || payload.slug.trim() === '') {
+        if (payload.name) {
+          payload.slug = payload.name
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/đ/g, 'd')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/(^-|-$)/g, '');
+        } else {
+          delete payload.slug;
+        }
+      } else {
+        payload.slug = payload.slug.trim();
+      }
+    }
+    payload.updated_at = new Date().toISOString();
+
     const { data, error } = await supabase
       .from('categories')
-      .update({
-        ...categoryData,
-        updated_at: new Date().toISOString()
-      })
+      .update(payload)
       .eq('id', id)
       .select()
       .single();
@@ -221,6 +273,89 @@ export const adminProductsService = {
 
     if (error) throw error;
     return true;
+  },
+
+  /**
+   * Upload ảnh món ăn từ máy tính:
+   * 1. Thử tải lên Supabase Storage bucket 'products'
+   * 2. Nếu bucket chưa tạo hoặc gặp lỗi quyền, tự động nén tối ưu sang định dạng Base64 WebP nhẹ nhàng (dưới 80KB)
+   *    giúp lưu trữ an toàn ngay vào cột `image_url` mà không bao giờ bị lỗi.
+   */
+  async uploadProductImage(file) {
+    if (!file) return '';
+
+    // Cách 1: Thử tải lên Supabase Storage (nếu đã kết nối và cấu hình bucket)
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const fileExt = file.name.split('.').pop() || 'jpg';
+        const cleanName = file.name
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-z0-9]/g, '-');
+        const fileName = `${Date.now()}-${cleanName.slice(0, 15)}.${fileExt}`;
+        const filePath = `items/${fileName}`;
+
+        const { data, error } = await supabase.storage
+          .from('products')
+          .upload(filePath, file, {
+            cacheControl: '3600',
+            upsert: true
+          });
+
+        if (!error && data) {
+          const { data: publicData } = supabase.storage
+            .from('products')
+            .getPublicUrl(filePath);
+
+          if (publicData?.publicUrl) {
+            return publicData.publicUrl;
+          }
+        }
+      } catch (storageErr) {
+        console.warn("Supabase Storage bucket upload fallback:", storageErr);
+      }
+    }
+
+    // Cách 2: Tự động nén ảnh trên client thành Base64 WebP (max 800px, chất lượng cao nhưng siêu nhẹ)
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+          const maxWidth = 800;
+          const maxHeight = 800;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > maxWidth) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            }
+          } else {
+            if (height > maxHeight) {
+              width = Math.round((width * maxHeight) / height);
+              height = maxHeight;
+            }
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Nén định dạng webp chất lượng 82%
+          const compressed = canvas.toDataURL('image/webp', 0.82);
+          resolve(compressed);
+        };
+        img.onerror = () => resolve(event.target.result);
+      };
+      reader.onerror = (err) => reject(err);
+    });
   },
 
   /**

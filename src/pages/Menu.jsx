@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { menuService } from '../services/menuService';
 import SectionHeading from '../components/SectionHeading';
 import ProductCard from '../components/ProductCard';
@@ -96,7 +96,7 @@ export default function Menu({ onNavigate }) {
         <div className="bg-[#14201a] p-4 sm:p-6 rounded-3xl border border-white/10 shadow-xl mb-10 space-y-5">
           {/* Search Box */}
           <div className="relative max-w-xl mx-auto">
-            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
+            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/60">
               search
             </span>
             <input
@@ -104,7 +104,7 @@ export default function Menu({ onNavigate }) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Tìm tên món (Cà phê sữa, Bạc xỉu, Bánh mì chảo, Trà đào...)"
-              className="w-full bg-[#0a1510] pl-12 pr-10 py-3.5 rounded-2xl border border-white/15 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-[#92f7c3] focus:ring-1 focus:ring-[#92f7c3] transition-all"
+              className="w-full bg-[#0a1510] pl-12 pr-10 py-3.5 rounded-2xl border border-white/15 text-sm text-white placeholder:text-white/60 focus:outline-none focus:border-[#92f7c3] focus:ring-1 focus:ring-[#92f7c3] transition-all"
             />
             {searchQuery && (
               <button
@@ -130,14 +130,9 @@ export default function Menu({ onNavigate }) {
                   className={`px-5 py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2 border ${
                     isActive
                       ? 'bg-[#92f7c3] text-[#012d1d] border-[#92f7c3] shadow-md shadow-[#92f7c3]/20 font-bold scale-105'
-                      : 'bg-white/5 text-white/70 border-white/10 hover:border-white/30 hover:text-white'
+                      : 'bg-white/5 text-white/85 border-white/10 hover:border-white/30 hover:text-white'
                   }`}
                 >
-                  {cat.icon && (
-                    <span className="material-symbols-outlined text-sm">
-                      {cat.icon}
-                    </span>
-                  )}
                   <span>{cat.name}</span>
                 </button>
               );
@@ -148,10 +143,10 @@ export default function Menu({ onNavigate }) {
         {/* ================= RESULTS HEADER ================= */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-8 pb-4 border-b border-white/10">
           <div className="flex items-center gap-2">
-            <h3 className="text-xl font-['Playfair_Display'] text-white font-bold">
+            <h3 className="text-xl font-['Fraunces'] text-white font-bold">
               Danh Sách Món
             </h3>
-            <span className="text-xs text-white/50">
+            <span className="text-xs text-white/75 font-medium">
               ({products.length} món)
             </span>
           </div>
@@ -172,7 +167,7 @@ export default function Menu({ onNavigate }) {
         {loading ? (
           <LoadingSpinner text="Đang cập nhật thực đơn..." />
         ) : products.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {products.map((product) => (
               <ProductCard
                 key={product.id}
@@ -196,7 +191,7 @@ export default function Menu({ onNavigate }) {
         )}
 
         {/* ================= INFO CALLOUT FOOTER ================= */}
-        <div className="mt-16 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#14201a] to-[#1a2f26] border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+        <div id="menu-bottom-callout" className="mt-16 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#14201a] to-[#1a2f26] border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-full bg-[#92f7c3]/20 text-[#92f7c3] flex items-center justify-center shrink-0">
               <span className="material-symbols-outlined text-2xl">local_cafe</span>
@@ -205,7 +200,7 @@ export default function Menu({ onNavigate }) {
               <h4 className="text-base text-white font-bold">
                 100% Cà Phê Mộc Rang Xay Nguyên Bản
               </h4>
-              <p className="text-xs text-white/70 max-w-xl leading-relaxed">
+              <p className="text-xs text-white/85 max-w-xl leading-relaxed">
                 MIA COFFEE cam kết chỉ sử dụng cà phê hạt mộc nguyên chất, không hương liệu tẩm ướp hay chất tạo sánh, giữ trọn hậu vị ngọt thanh và an toàn cho sức khỏe.
               </p>
             </div>

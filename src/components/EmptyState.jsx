@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EmptyState Component
  * Displays helpful feedback when query or filter yields zero results
  */
@@ -16,7 +16,7 @@ export default function EmptyState({
       </div>
 
       <div className="space-y-1">
-        <h3 className="text-lg font-['Playfair_Display'] text-white font-semibold">
+        <h3 className="text-lg font-['Fraunces'] text-white font-semibold">
           {title}
         </h3>
         <p className="text-xs sm:text-sm text-white/60 max-w-sm mx-auto leading-relaxed">

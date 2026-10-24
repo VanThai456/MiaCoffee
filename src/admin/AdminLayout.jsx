@@ -1,11 +1,11 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { brandInfo } from '../data/brandData';
 import { adminAuthService } from '../services/adminAuthService';
 import { isSupabaseConfigured } from '../services/supabaseClient';
 import DashboardOverview from './DashboardOverview';
 import ProductsManager from './ProductsManager';
 import CategoriesManager from './CategoriesManager';
-import ApplicationsManager from './ApplicationsManager';
+import GalleryManager from './GalleryManager';
 import MessagesManager from './MessagesManager';
 import SettingsManager from './SettingsManager';
 import AuditLogsViewer from './AuditLogsViewer';
@@ -22,7 +22,7 @@ export default function AdminLayout({ adminUser, onLogout, onGoToCustomerSite })
     { id: 'overview', label: 'Tổng Quan', icon: 'dashboard' },
     { id: 'products', label: 'Thực Đơn Món', icon: 'coffee' },
     { id: 'categories', label: 'Danh Mục', icon: 'category' },
-    { id: 'applications', label: 'Đơn Ứng Tuyển', icon: 'group' },
+    { id: 'gallery', label: 'Thư Viện Ảnh', icon: 'collections' },
     { id: 'messages', label: 'Hộp Thư Liên Hệ', icon: 'mail' },
     { id: 'settings', label: 'Cài Đặt Quán', icon: 'settings' },
     { id: 'audit', label: 'Nhật Ký Audit', icon: 'history' }
@@ -69,7 +69,7 @@ export default function AdminLayout({ adminUser, onLogout, onGoToCustomerSite })
               />
             </div>
             <div>
-              <h1 className="text-lg font-['Playfair_Display'] font-bold text-white tracking-wide">
+              <h1 className="text-lg font-['Fraunces'] font-bold text-white tracking-wide">
                 {brandInfo.name}
               </h1>
               <p className="text-[10px] text-[#92f7c3] uppercase tracking-widest font-semibold">
@@ -177,7 +177,7 @@ export default function AdminLayout({ adminUser, onLogout, onGoToCustomerSite })
           {activeTab === 'overview' && <DashboardOverview onNavigateTab={setActiveTab} />}
           {activeTab === 'products' && <ProductsManager />}
           {activeTab === 'categories' && <CategoriesManager />}
-          {activeTab === 'applications' && <ApplicationsManager />}
+          {activeTab === 'gallery' && <GalleryManager />}
           {activeTab === 'messages' && <MessagesManager />}
           {activeTab === 'settings' && <SettingsManager />}
           {activeTab === 'audit' && <AuditLogsViewer />}

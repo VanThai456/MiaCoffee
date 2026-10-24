@@ -3,7 +3,8 @@
  * Provides data abstraction for Cafe zones, amenities and photo lookbook
  */
 
-import { spaceZones, spaceAmenities, spaceGallery, spaceHighlights } from '../data/spaceData';
+import { spaceZones, spaceAmenities, spaceHighlights } from '../data/spaceData';
+import { adminGalleryService } from './adminGalleryService';
 
 export const spaceService = {
   async getHighlights() {
@@ -19,9 +20,7 @@ export const spaceService = {
   },
 
   async getGallery({ category = 'all' } = {}) {
-    if (category && category !== 'all') {
-      return Promise.resolve(spaceGallery.filter(item => item.category === category));
-    }
-    return Promise.resolve([...spaceGallery]);
+    return adminGalleryService.getGalleryImages({ category });
   }
 };
+

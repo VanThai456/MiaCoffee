@@ -42,6 +42,20 @@ export default function App() {
   const [adminUser, setAdminUser] = useState(null);
   const [_checkingAuth, setCheckingAuth] = useState(true);
 
+  // Theme State: 'dark' (ban đêm - mặc định) hoặc 'light' (ban ngày / sáng hơn)
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('mia_theme') || 'dark';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('mia_theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
+  };
+
   // Check initial session
   useEffect(() => {
     let isMounted = true;
@@ -109,9 +123,14 @@ export default function App() {
 
   // Customer-facing Website Layout
   return (
-    <div className="min-h-screen flex flex-col bg-[#101915] text-[#edece6]">
+    <div className="min-h-screen flex flex-col bg-[#101915] text-[#edece6] transition-colors duration-300">
       {/* Global Shared Header */}
-      <Header activePage={activePage} onNavigate={handleNavigate} />
+      <Header
+        activePage={activePage}
+        onNavigate={handleNavigate}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+      />
 
       {/* Main Page Content */}
       <main className="flex-1">

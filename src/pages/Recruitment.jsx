@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { jobService } from '../services/jobService';
 import SectionHeading from '../components/SectionHeading';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -11,7 +11,6 @@ import { brandInfo } from '../data/brandData';
  */
 export default function Recruitment() {
   const [positions, setPositions] = useState([]);
-  const [benefits, setBenefits] = useState([]);
   const [faqs, setFaqs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedJobId, setExpandedJobId] = useState('job-service');
@@ -21,14 +20,12 @@ export default function Recruitment() {
     async function fetchJobs() {
       try {
         setLoading(true);
-        const [posData, benData, faqData] = await Promise.all([
+        const [posData, faqData] = await Promise.all([
           jobService.getPositions(),
-          jobService.getBenefits(),
           jobService.getFaqs()
         ]);
         if (isMounted) {
           setPositions(posData);
-          setBenefits(benData);
           setFaqs(faqData);
         }
       } catch (err) {
@@ -57,14 +54,10 @@ export default function Recruitment() {
         </div>
 
         {/* ================= 1.5 DIRECT INTERVIEW & NO EXPERIENCE CALLOUT BANNER ================= */}
-        <div className="mb-16 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#173024] via-[#14201a] to-[#1a2f24] border border-[#92f7c3]/40 shadow-2xl space-y-6">
+        <div id="recruitment-callout" className="mb-16 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#173024] via-[#14201a] to-[#1a2f24] border border-[#92f7c3]/40 shadow-2xl space-y-6">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-white/10">
             <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#92f7c3] text-[#012d1d] text-xs font-bold uppercase tracking-wider shadow">
-                <span className="material-symbols-outlined text-sm">verified</span>
-                <span>Tuyển Dụng Trực Tiếp 2026</span>
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-['Playfair_Display'] text-white font-bold">
+              <h3 className="text-2xl sm:text-3xl font-['Fraunces'] text-white font-bold">
                 KHÔNG CẦN KINH NGHIỆM • ĐẾN TRỰC TIẾP QUÁN PHỎNG VẤN
               </h3>
               <p className="text-xs sm:text-sm text-white/80 max-w-2xl leading-relaxed">
@@ -99,10 +92,10 @@ export default function Recruitment() {
               <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-[#92f7c3]/40 transition-colors">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-bold text-[#92f7c3] uppercase">Ca 1: Sáng Sớm</span>
-                  <span className="material-symbols-outlined text-base text-white/50">wb_sunny</span>
+                  <span className="material-symbols-outlined text-base text-[#92f7c3]">wb_sunny</span>
                 </div>
                 <p className="text-base font-bold text-white mb-1">06:00 – 11:30</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white/80">
                   Phục vụ cao điểm cà phê mộc & điểm tâm sáng nóng sốt. Phù hợp các bạn dậy sớm.
                 </p>
               </div>
@@ -110,10 +103,10 @@ export default function Recruitment() {
               <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-[#92f7c3]/40 transition-colors">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-bold text-[#92f7c3] uppercase">Ca 2: Trưa – Chiều</span>
-                  <span className="material-symbols-outlined text-base text-white/50">light_mode</span>
+                  <span className="material-symbols-outlined text-base text-[#92f7c3]">light_mode</span>
                 </div>
                 <p className="text-base font-bold text-white mb-1">11:30 – 17:00</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white/80">
                   Phục vụ trà trái cây và khách phòng máy lạnh yên tĩnh. Phù hợp sinh viên học sáng.
                 </p>
               </div>
@@ -121,10 +114,10 @@ export default function Recruitment() {
               <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-[#92f7c3]/40 transition-colors">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-bold text-[#92f7c3] uppercase">Ca 3: Chiều Tối</span>
-                  <span className="material-symbols-outlined text-base text-white/50">dark_mode</span>
+                  <span className="material-symbols-outlined text-base text-[#92f7c3]">dark_mode</span>
                 </div>
-                <p className="text-base font-bold text-white mb-1">17:00 – 22:30</p>
-                <p className="text-xs text-white/60">
+                <p className="text-base font-bold text-white mb-1">17:00 – 22:00</p>
+                <p className="text-xs text-white/80">
                   Phục vụ nhóm bạn vỉa hè & gia đình sân vườn ngắm phố. Thích hợp kiếm thêm buổi tối.
                 </p>
               </div>
@@ -132,10 +125,10 @@ export default function Recruitment() {
               <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-[#92f7c3]/40 transition-colors">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-bold text-[#92f7c3] uppercase">Ca Xoay / Part-Time</span>
-                  <span className="material-symbols-outlined text-base text-white/50">sync</span>
+                  <span className="material-symbols-outlined text-base text-[#92f7c3]">sync</span>
                 </div>
                 <p className="text-base font-bold text-white mb-1">Linh Hoạt Theo Lịch</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white/80">
                   Đăng ký lịch rảnh theo tuần theo thời khóa biểu sinh viên, không sợ cấn giờ học.
                 </p>
               </div>
@@ -143,37 +136,6 @@ export default function Recruitment() {
           </div>
         </div>
 
-        {/* ================= 2. BENEFITS GRID ================= */}
-        <div className="mb-20">
-          <SectionHeading
-            center
-            icon="star"
-            badge="Quyền Lợi & Đãi Ngộ"
-            title="Tại Sao Bạn Sẽ Thích"
-            highlight="Làm Việc Tại MIA?"
-            description="Chính sách phúc lợi minh bạch, môi trường hòa đồng và cơ hội nâng cao tay nghề."
-            className="mb-12"
-          />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {benefits.map((ben, idx) => (
-              <div
-                key={idx}
-                className="p-6 rounded-2xl bg-[#14201a] border border-white/10 hover:border-[#92f7c3]/40 transition-all hover:-translate-y-1 space-y-3"
-              >
-                <div className="w-12 h-12 rounded-xl bg-[#1b4332] text-[#92f7c3] flex items-center justify-center">
-                  <span className="material-symbols-outlined text-2xl">{ben.icon}</span>
-                </div>
-                <h4 className="text-base font-bold text-white font-['Playfair_Display']">
-                  {ben.title}
-                </h4>
-                <p className="text-xs text-white/65 leading-relaxed">
-                  {ben.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
 
         {/* ================= 3. OPEN POSITIONS (CHỈ GIỮ PHỤC VỤ & PHA CHẾ) ================= */}
         <div className="max-w-4xl mx-auto mb-24 space-y-8">
@@ -197,11 +159,10 @@ export default function Recruitment() {
                 return (
                   <div
                     key={pos.id}
-                    className={`rounded-3xl border transition-all duration-300 overflow-hidden ${
-                      isExpanded
+                    className={`rounded-3xl border transition-all duration-300 overflow-hidden ${isExpanded
                         ? 'bg-[#14201a] border-[#92f7c3]/50 shadow-2xl'
                         : 'bg-white/[0.02] border-white/10 hover:border-white/25'
-                    }`}
+                      }`}
                   >
                     {/* Accordion Header */}
                     <button
@@ -211,7 +172,7 @@ export default function Recruitment() {
                     >
                       <div className="space-y-2">
                         <div className="flex flex-wrap items-center gap-3">
-                          <span className="text-xl sm:text-2xl font-bold text-white font-['Playfair_Display']">
+                          <span className="text-xl sm:text-2xl font-bold text-white font-['Fraunces']">
                             {pos.title}
                           </span>
                           <span className="px-3 py-1 rounded-full bg-[#1b4332] text-[#92f7c3] text-xs font-bold uppercase tracking-wider">
@@ -222,12 +183,12 @@ export default function Recruitment() {
                           <span className="text-[#92f7c3] font-bold">
                             Lương: {pos.salary}
                           </span>
-                          <span className="text-white/40">•</span>
-                          <span className="text-amber-300 font-medium">
+                          <span className="text-white/60">•</span>
+                          <span className="text-amber-300 font-semibold">
                             {pos.experienceRequired || 'Không cần kinh nghiệm'}
                           </span>
-                          <span className="text-white/40">•</span>
-                          <span className="text-white/70">
+                          <span className="text-white/60">•</span>
+                          <span className="text-white/90">
                             Cần tuyển: <strong>{pos.slots}</strong>
                           </span>
                         </div>
@@ -257,7 +218,7 @@ export default function Recruitment() {
 
                         {/* Shift details */}
                         <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-                          <p className="text-xs text-white/70">
+                          <p className="text-xs text-white/85">
                             <strong className="text-white">Khung ca làm việc:</strong> {pos.shifts}
                           </p>
                         </div>
@@ -347,7 +308,7 @@ export default function Recruitment() {
                   <span className="text-[#92f7c3]">Q:</span>
                   <span>{faq.q}</span>
                 </h4>
-                <p className="text-xs sm:text-sm text-white/70 pl-6 leading-relaxed">
+                <p className="text-xs sm:text-sm text-white/85 pl-6 leading-relaxed">
                   {faq.a}
                 </p>
               </div>

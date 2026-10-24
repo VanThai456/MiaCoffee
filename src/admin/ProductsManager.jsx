@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { adminProductsService } from '../services/adminProductsService';
 import { adminAuditService } from '../services/adminAuditService';
 import ImageWithFallback from '../components/ImageWithFallback';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ImageCropperModal from '../components/ImageCropperModal';
 
 /**
  * ProductsManager Component
@@ -19,7 +20,6 @@ export default function ProductsManager() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  const [seeding, setSeeding] = useState(false);
   const [actionNotice, setActionNotice] = useState(null);
 
   // Form State
@@ -33,6 +33,14 @@ export default function ProductsManager() {
     is_available: true,
     sort_order: 0
   });
+
+  // Local Image Upload State
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState('');
+  const [imageMode, setImageMode] = useState('upload'); // 'upload' | 'url'
+  const [isDragging, setIsDragging] = useState(false);
+  const [isCropperOpen, setIsCropperOpen] = useState(false);
+  const [cropperRawSrc, setCropperRawSrc] = useState('');
 
   const loadData = async () => {
     try {
@@ -56,12 +64,15 @@ export default function ProductsManager() {
 
   const openAddModal = () => {
     setEditingProduct(null);
+    setImageFile(null);
+    setImagePreview('');
+    setImageMode('upload');
     setFormData({
       name: '',
       category_id: categories[0]?.id || '',
       price: 30000,
       description: '',
-      image_url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBvhs2-M692R2XcR4OkUJdoWcMcPBk7jE4vfYj-W_DrQpFY-Q4oxI0losAV5KPusvomMZD2g16c8DmQVaUlANzoKOgYskca_CcOblRwZMzV64zVwjjYUntD2dGBQF3zT3Zr4RGSeD27cavXTBtSO4RkDmfWhUmyO8UvmL6tFTCvuqdpUa9W4wfftgFR1b0QAxTr2iGjl2P7sK8uUcwHi17y5GywgZBkPzjpznkEsgbDBaW3x40DJNMr',
+      image_url: '',
       is_featured: false,
       is_available: true,
       sort_order: 0
@@ -71,6 +82,9 @@ export default function ProductsManager() {
 
   const openEditModal = (prod) => {
     setEditingProduct(prod);
+    setImageFile(null);
+    setImagePreview(prod.image_url || '');
+    setImageMode('upload');
     setFormData({
       name: prod.name,
       category_id: prod.category_id || prod.category?.id || '',
@@ -82,6 +96,59 @@ export default function ProductsManager() {
       sort_order: prod.sort_order || 0
     });
     setIsModalOpen(true);
+  };
+
+  const handleFileSelect = (file) => {
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      alert("Vui lòng chọn tệp hình ảnh hợp lệ (JPG, PNG, WEBP, GIF, SVG).");
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      alert("Kích thước ảnh tối đa là 10MB. Vui lòng chọn ảnh nhỏ hơn.");
+      return;
+    }
+
+    setImageFile(file);
+    const objectUrl = URL.createObjectURL(file);
+    setImagePreview(objectUrl);
+    setCropperRawSrc(objectUrl);
+    // Tự động mở cửa sổ cắt & điều chỉnh ngay khi chọn ảnh
+    setIsCropperOpen(true);
+  };
+
+  const handleCropComplete = async (croppedDataUrl) => {
+    setImagePreview(croppedDataUrl);
+    try {
+      const res = await fetch(croppedDataUrl);
+      const blob = await res.blob();
+      const fileName = imageFile?.name
+        ? `crop-${imageFile.name.replace(/\.[^.]+$/, '')}.webp`
+        : 'product-cropped.webp';
+      const file = new File([blob], fileName, { type: 'image/webp' });
+      setImageFile(file);
+    } catch (err) {
+      console.warn("File creation from blob failed:", err);
+    }
+    setIsCropperOpen(false);
+    showToast("Đã cắt và điều chỉnh ảnh thành công!");
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleFileSelect(e.dataTransfer.files[0]);
+    }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
   };
 
   const handleToggleAvailable = async (prod) => {
@@ -138,21 +205,36 @@ export default function ProductsManager() {
 
     try {
       setSubmitting(true);
+
+      let finalImageUrl = formData.image_url;
+      // Nếu người dùng tải ảnh từ máy tính
+      if (imageMode === 'upload' && imageFile) {
+        showToast("Đang tối ưu & lưu ảnh...");
+        finalImageUrl = await adminProductsService.uploadProductImage(imageFile);
+      } else if (imageMode === 'upload' && !imagePreview) {
+        finalImageUrl = '';
+      }
+
+      const submitPayload = {
+        ...formData,
+        image_url: finalImageUrl || ''
+      };
+
       if (editingProduct) {
-        await adminProductsService.updateProduct(editingProduct.id, formData);
+        await adminProductsService.updateProduct(editingProduct.id, submitPayload);
         await adminAuditService.logAction({
           action: 'UPDATE_PRODUCT',
           entityType: 'products',
           entityId: editingProduct.id,
-          details: formData
+          details: submitPayload
         });
         showToast(`Đã cập nhật món "${formData.name}"`);
       } else {
-        await adminProductsService.createProduct(formData);
+        await adminProductsService.createProduct(submitPayload);
         await adminAuditService.logAction({
           action: 'CREATE_PRODUCT',
           entityType: 'products',
-          details: formData
+          details: submitPayload
         });
         showToast(`Đã thêm mới món "${formData.name}"`);
       }
@@ -162,19 +244,6 @@ export default function ProductsManager() {
       alert("Lỗi lưu dữ liệu: " + err.message);
     } finally {
       setSubmitting(false);
-    }
-  };
-
-  const handleSeedData = async () => {
-    try {
-      setSeeding(true);
-      const res = await adminProductsService.seedMockDataToSupabase();
-      showToast(`Đã đồng bộ ${res.productsCount} món ăn & ${res.categoriesCount} danh mục lên Supabase thành công!`);
-      await loadData();
-    } catch (err) {
-      alert("Lỗi nạp dữ liệu: " + err.message);
-    } finally {
-      setSeeding(false);
     }
   };
 
@@ -196,7 +265,7 @@ export default function ProductsManager() {
       {/* Header & Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h2 className="text-xl sm:text-2xl font-['Playfair_Display'] text-white font-bold">
+          <h2 className="text-xl sm:text-2xl font-['Fraunces'] text-white font-bold">
             Quản Lý Thực Đơn Đồ Uống
           </h2>
           <p className="text-xs text-white/60">
@@ -204,26 +273,14 @@ export default function ProductsManager() {
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-          <button
-            type="button"
-            disabled={seeding}
-            onClick={handleSeedData}
-            className="py-2.5 px-3.5 sm:px-4 rounded-xl sm:rounded-full bg-[#1b4332] hover:bg-[#2d6a4f] text-[#92f7c3] text-xs font-bold transition-all border border-[#92f7c3]/30 flex items-center justify-center gap-1.5 shadow-lg hover:shadow-[#92f7c3]/10"
-          >
-            <span className="material-symbols-outlined text-base">cloud_upload</span>
-            <span>{seeding ? 'Đang nạp lên Supabase...' : 'Nạp 12 Món & Danh Mục Lên Supabase'}</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={openAddModal}
-            className="btn-primary py-2.5 px-4 sm:px-5 text-xs flex items-center justify-center gap-1.5"
-          >
-            <span className="material-symbols-outlined text-base">add</span>
-            <span>Thêm Món Mới</span>
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={openAddModal}
+          className="btn-primary py-2.5 px-4 sm:px-5 text-xs flex items-center justify-center gap-1.5"
+        >
+          <span className="material-symbols-outlined text-base">add</span>
+          <span>Thêm Món Mới</span>
+        </button>
       </div>
 
       {/* Search & Category Filter */}
@@ -493,7 +550,7 @@ export default function ProductsManager() {
             {/* Modal Sticky Header */}
             <div className="px-5 sm:px-6 py-4 bg-[#14201a] border-b border-white/10 flex items-center justify-between shrink-0">
               <div>
-                <h3 className="text-base sm:text-lg font-['Playfair_Display'] text-white font-bold">
+                <h3 className="text-base sm:text-lg font-['Fraunces'] text-white font-bold">
                   {editingProduct ? 'Chỉnh Sửa Món' : 'Thêm Món Mới'}
                 </h3>
                 <p className="text-[11px] text-white/50">
@@ -573,29 +630,158 @@ export default function ProductsManager() {
                   </div>
                 </div>
 
-                {/* Đường Dẫn Ảnh & Live Thumbnail Preview */}
+                {/* Chọn ảnh từ máy tính hoặc Nhập URL */}
                 <div>
-                  <label className="block text-white/90 font-semibold mb-1.5 text-xs">
-                    Đường Dẫn Ảnh (image_url)
-                  </label>
-                  <div className="flex items-center gap-3">
-                    <input
-                      type="url"
-                      value={formData.image_url}
-                      onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                      placeholder="https://..."
-                      className="flex-1 bg-[#0c1410] border border-white/15 rounded-xl px-3.5 py-2.5 text-white placeholder-white/30 text-xs sm:text-sm focus:outline-none focus:border-[#92f7c3] transition-all"
-                    />
-                    {formData.image_url && (
-                      <div className="w-11 h-11 rounded-xl overflow-hidden bg-black/40 border border-white/15 shrink-0" title="Xem trước ảnh">
-                        <ImageWithFallback
-                          src={formData.image_url}
-                          alt="Preview"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    )}
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-white/90 font-semibold text-xs">
+                      Hình Ảnh Món Ăn
+                    </label>
+                    <div className="flex items-center gap-1 bg-white/5 p-0.5 rounded-lg border border-white/10 text-[11px]">
+                      <button
+                        type="button"
+                        onClick={() => setImageMode('upload')}
+                        className={`px-2.5 py-1 rounded-md font-medium transition-all ${
+                          imageMode === 'upload'
+                            ? 'bg-[#1b4332] text-[#92f7c3] shadow'
+                            : 'text-white/60 hover:text-white'
+                        }`}
+                      >
+                        Tải từ máy
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setImageMode('url')}
+                        className={`px-2.5 py-1 rounded-md font-medium transition-all ${
+                          imageMode === 'url'
+                            ? 'bg-[#1b4332] text-[#92f7c3] shadow'
+                            : 'text-white/60 hover:text-white'
+                        }`}
+                      >
+                        Nhập link URL
+                      </button>
+                    </div>
                   </div>
+
+                  {imageMode === 'upload' ? (
+                    <div>
+                      {imagePreview ? (
+                        <div className="relative rounded-2xl bg-[#0c1410] border border-white/15 p-3 flex items-center gap-3.5 group">
+                          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-black/40 border border-white/10 shrink-0">
+                            <ImageWithFallback
+                              src={imagePreview}
+                              alt="Preview"
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-white font-medium text-xs truncate">
+                              {imageFile ? imageFile.name : (editingProduct ? 'Ảnh hiện tại của món' : 'Ảnh đã chọn')}
+                            </p>
+                            <p className="text-[11px] text-white/40 mt-0.5">
+                              {imageFile
+                                ? `${(imageFile.size / 1024).toFixed(0)} KB • Đã sẵn sàng lưu`
+                                : 'Đang sử dụng ảnh sẵn có'}
+                            </p>
+                            <div className="flex flex-wrap items-center gap-2 mt-2">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setCropperRawSrc(imagePreview);
+                                  setIsCropperOpen(true);
+                                }}
+                                className="px-2.5 py-1 rounded-lg bg-[#92f7c3]/15 hover:bg-[#92f7c3]/25 text-[#92f7c3] font-medium text-[11px] transition-colors flex items-center gap-1"
+                                title="Mở bộ công cụ cắt ảnh và căn chỉnh"
+                              >
+                                <span className="material-symbols-outlined text-xs">crop</span>
+                                <span>Cắt & Điều chỉnh</span>
+                              </button>
+
+                              <label className="cursor-pointer px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/15 text-white/90 font-medium text-[11px] transition-colors inline-block">
+                                Đổi ảnh khác
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  className="hidden"
+                                  onChange={(e) => {
+                                    if (e.target.files?.[0]) handleFileSelect(e.target.files[0]);
+                                  }}
+                                />
+                              </label>
+
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setImageFile(null);
+                                  setImagePreview('');
+                                  setFormData(prev => ({ ...prev, image_url: '' }));
+                                }}
+                                className="px-2 py-1 rounded-lg bg-red-950/40 hover:bg-red-900/60 text-red-300 text-[11px] transition-colors"
+                              >
+                                Xóa ảnh
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <label
+                          onDrop={handleDrop}
+                          onDragOver={handleDragOver}
+                          onDragLeave={handleDragLeave}
+                          className={`flex flex-col items-center justify-center p-6 rounded-2xl border-2 border-dashed cursor-pointer transition-all ${
+                            isDragging
+                              ? 'border-[#92f7c3] bg-[#92f7c3]/10'
+                              : 'border-white/20 bg-[#0c1410] hover:border-white/40 hover:bg-white/[0.02]'
+                          }`}
+                        >
+                          <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-[#92f7c3] mb-2.5">
+                            <span className="material-symbols-outlined text-2xl">add_photo_alternate</span>
+                          </div>
+                          <p className="text-white text-xs font-semibold">
+                            Bấm để chọn ảnh từ máy <span className="text-white/40 font-normal">hoặc kéo thả vào đây</span>
+                          </p>
+                          <p className="text-[10px] text-white/40 mt-1">
+                            Hỗ trợ JPG, PNG, WEBP, GIF (Tự động nén tối ưu)
+                          </p>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => {
+                              if (e.target.files?.[0]) handleFileSelect(e.target.files[0]);
+                            }}
+                          />
+                        </label>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="url"
+                          value={formData.image_url}
+                          onChange={(e) => {
+                            const url = e.target.value;
+                            setFormData({ ...formData, image_url: url });
+                            setImagePreview(url);
+                          }}
+                          placeholder="https://example.com/hinh-anh-mon.jpg"
+                          className="flex-1 bg-[#0c1410] border border-white/15 rounded-xl px-3.5 py-2.5 text-white placeholder-white/30 text-xs sm:text-sm focus:outline-none focus:border-[#92f7c3] transition-all"
+                        />
+                        {formData.image_url && (
+                          <div className="w-11 h-11 rounded-xl overflow-hidden bg-black/40 border border-white/15 shrink-0" title="Xem trước ảnh">
+                            <ImageWithFallback
+                              src={formData.image_url}
+                              alt="Preview"
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-[10px] text-white/40">
+                        Dán đường link URL ảnh trực tiếp từ mạng nếu không muốn tải tệp từ máy.
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 {/* Mô Tả Món */}
@@ -664,6 +850,17 @@ export default function ProductsManager() {
             </form>
           </div>
         </div>
+      )}
+
+      {/* Image Cropper & Adjuster Modal */}
+      {isCropperOpen && (
+        <ImageCropperModal
+          isOpen={isCropperOpen}
+          imageSrc={cropperRawSrc}
+          onClose={() => setIsCropperOpen(false)}
+          onCropSave={handleCropComplete}
+          initialAspect="1:1"
+        />
       )}
     </div>
   );

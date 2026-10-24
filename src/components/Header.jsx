@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { brandInfo } from '../data/brandData';
 
 /**
  * Header Navigation Component
  * Responsive navigation with mobile menu drawer and active state
  */
-export default function Header({ activePage, onNavigate }) {
+export default function Header({ activePage, onNavigate, theme = 'dark', onToggleTheme }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -56,7 +56,7 @@ export default function Header({ activePage, onNavigate }) {
             />
           </div>
           <div className="flex flex-col">
-            <span className="text-xl font-['Playfair_Display'] text-white font-bold tracking-wider group-hover:text-[#92f7c3] transition-colors">
+            <span className="text-xl font-['Fraunces'] text-white font-bold tracking-wider group-hover:text-[#92f7c3] transition-colors">
               {brandInfo.name}
             </span>
             <span className="text-[10px] text-[#92f7c3] tracking-widest uppercase font-medium">
@@ -86,30 +86,71 @@ export default function Header({ activePage, onNavigate }) {
           })}
         </nav>
 
-        {/* Action Button: Chỉ đường / Maps */}
+        {/* Desktop Action Buttons: Theme Toggle & Chỉ đường */}
         <div className="hidden sm:flex items-center gap-3">
+          {/* Theme Switcher Button (Icon Only) */}
+          <button
+            type="button"
+            onClick={onToggleTheme}
+            aria-label={theme === 'light' ? 'Chuyển sang giao diện ban đêm' : 'Chuyển sang giao diện sáng hơn'}
+            title={theme === 'light' ? 'Đổi sang giao diện Ban Đêm' : 'Đổi sang giao diện Sáng'}
+            className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 shadow-sm ${
+              theme === 'light'
+                ? 'bg-amber-100/90 border-amber-300 text-amber-950 hover:bg-amber-200'
+                : 'bg-white/5 border-white/15 text-white hover:bg-white/10 hover:border-white/30'
+            }`}
+          >
+            <span
+              className="material-symbols-outlined text-lg transition-transform duration-300"
+              style={{ color: theme === 'light' ? '#d97706' : '#92f7c3' }}
+            >
+              {theme === 'light' ? 'wb_sunny' : 'dark_mode'}
+            </span>
+          </button>
+
           <a
             href={brandInfo.contact.mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#92f7c3] text-[#012d1d] hover:bg-white text-xs font-bold uppercase tracking-wider shadow-lg shadow-[#006c48]/20 transition-all hover:scale-105"
+            style={{ color: '#012d1d' }}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#92f7c3] !text-[#012d1d] hover:bg-white text-xs font-bold uppercase tracking-wider shadow-lg shadow-[#006c48]/20 transition-all hover:scale-105"
           >
-            <span className="material-symbols-outlined text-base">near_me</span>
-            <span>Chỉ đường</span>
+            <span className="material-symbols-outlined text-base" style={{ color: '#012d1d' }}>near_me</span>
+            <span style={{ color: '#012d1d' }}>Chỉ đường</span>
           </a>
         </div>
 
-        {/* Mobile Hamburger Button */}
-        <button
-          type="button"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white"
-          aria-label={mobileMenuOpen ? 'Đóng menu' : 'Mở menu'}
-        >
-          <span className="material-symbols-outlined text-2xl">
-            {mobileMenuOpen ? 'close' : 'menu'}
-          </span>
-        </button>
+        {/* Mobile Header Actions */}
+        <div className="flex sm:hidden items-center gap-2">
+          {/* Mobile Theme Toggle Button (Icon Only) */}
+          <button
+            type="button"
+            onClick={onToggleTheme}
+            aria-label={theme === 'light' ? 'Chuyển sang giao diện ban đêm' : 'Chuyển sang giao diện sáng hơn'}
+            title={theme === 'light' ? 'Đổi sang giao diện Ban Đêm' : 'Đổi sang giao diện Sáng'}
+            className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 ${
+              theme === 'light'
+                ? 'bg-amber-100 border-amber-300 text-amber-900'
+                : 'bg-white/5 border-white/15 text-[#92f7c3]'
+            }`}
+          >
+            <span className="material-symbols-outlined text-xl">
+              {theme === 'light' ? 'wb_sunny' : 'dark_mode'}
+            </span>
+          </button>
+
+          {/* Mobile Hamburger Button */}
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white"
+            aria-label={mobileMenuOpen ? 'Đóng menu' : 'Mở menu'}
+          >
+            <span className="material-symbols-outlined text-2xl">
+              {mobileMenuOpen ? 'close' : 'menu'}
+            </span>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Drawer Menu */}
@@ -138,15 +179,35 @@ export default function Header({ activePage, onNavigate }) {
             })}
           </div>
 
-          <div className="pt-4 border-t border-white/10 flex flex-col gap-2.5">
+          {/* Theme Switcher in Mobile Drawer */}
+          <div className="pt-3 border-t border-white/10 flex items-center justify-between">
+            <span className="text-xs text-white/70">Chế độ giao diện:</span>
+            <button
+              type="button"
+              onClick={onToggleTheme}
+              title={theme === 'light' ? 'Đổi sang giao diện Ban Đêm' : 'Đổi sang giao diện Sáng'}
+              className={`w-9 h-9 rounded-full flex items-center justify-center border transition-all ${
+                theme === 'light'
+                  ? 'bg-amber-100 text-amber-950 border-amber-300'
+                  : 'bg-white/10 text-[#92f7c3] border-white/15'
+              }`}
+            >
+              <span className="material-symbols-outlined text-base">
+                {theme === 'light' ? 'wb_sunny' : 'dark_mode'}
+              </span>
+            </button>
+          </div>
+
+          <div className="pt-3 border-t border-white/10 flex flex-col gap-2.5">
             <a
               href={brandInfo.contact.mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-[#92f7c3] text-[#012d1d] text-xs font-bold uppercase tracking-wider"
+              style={{ color: '#012d1d' }}
+              className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-[#92f7c3] !text-[#012d1d] text-xs font-bold uppercase tracking-wider"
             >
-              <span className="material-symbols-outlined text-base">near_me</span>
-              <span>Mở bản đồ chỉ đường</span>
+              <span className="material-symbols-outlined text-base" style={{ color: '#012d1d' }}>near_me</span>
+              <span style={{ color: '#012d1d' }}>Mở bản đồ chỉ đường</span>
             </a>
 
             <a

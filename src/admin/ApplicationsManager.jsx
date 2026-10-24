@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { adminApplicationsService } from '../services/adminApplicationsService';
 import LoadingSpinner from '../components/LoadingSpinner';
 
@@ -66,7 +66,7 @@ export default function ApplicationsManager() {
       {/* Header & Status Filter */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-['Playfair_Display'] text-white font-bold">
+          <h2 className="text-2xl font-['Fraunces'] text-white font-bold">
             Hồ Sơ Ứng Tuyển
           </h2>
           <p className="text-xs text-white/60">
@@ -112,7 +112,7 @@ export default function ApplicationsManager() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
                 <div>
                   <div className="flex items-center gap-3">
-                    <h3 className="text-lg font-bold text-white font-['Playfair_Display']">
+                    <h3 className="text-lg font-bold text-white font-['Fraunces']">
                       {app.full_name}
                     </h3>
                     {getStatusBadge(app.status)}

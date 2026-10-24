@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { adminAuditService } from '../services/adminAuditService';
 import LoadingSpinner from '../components/LoadingSpinner';
 
@@ -28,7 +28,7 @@ export default function AuditLogsViewer() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <h2 className="text-2xl font-['Playfair_Display'] text-white font-bold">
+        <h2 className="text-2xl font-['Fraunces'] text-white font-bold">
           Nhật Ký Quản Trị Hệ Thống
         </h2>
         <p className="text-xs text-white/60">

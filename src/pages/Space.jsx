@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { spaceService } from '../services/spaceService';
 import SectionHeading from '../components/SectionHeading';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ImageWithFallback from '../components/ImageWithFallback';
+import SpaceBookFlip from '../components/SpaceBookFlip';
 import { brandInfo } from '../data/brandData';
 
 /**
@@ -10,7 +11,6 @@ import { brandInfo } from '../data/brandData';
  * Showcases the cafe environment, seating zones, amenities, and visual lookbook
  */
 export default function Space() {
-  const [zones, setZones] = useState([]);
   const [amenities, setAmenities] = useState([]);
   const [gallery, setGallery] = useState([]);
   const [galleryFilter, setGalleryFilter] = useState('all');
@@ -22,13 +22,11 @@ export default function Space() {
     async function loadSpaceData() {
       try {
         setLoading(true);
-        const [zonesData, amenitiesData, galleryData] = await Promise.all([
-          spaceService.getZones(),
+        const [amenitiesData, galleryData] = await Promise.all([
           spaceService.getAmenities(),
           spaceService.getGallery({ category: galleryFilter })
         ]);
         if (isMounted) {
-          setZones(zonesData);
           setAmenities(amenitiesData);
           setGallery(galleryData);
         }
@@ -43,102 +41,32 @@ export default function Space() {
   }, [galleryFilter]);
 
   return (
-    <div className="pt-28 pb-20 animate-fade-in">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        {/* ================= 1. HEADER HERO ================= */}
-        <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
+    <div className="pt-20 sm:pt-28 pb-14 sm:pb-20 animate-fade-in">
+      {/* ================= 1. HEADER HERO ================= */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-2 sm:mb-10">
+        <div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4">
           <SectionHeading
             center
             icon="photo_camera"
-            badge="Không Gian Đa Khu Vực"
+            badge="Không Gian Quán"
             title="Khám Phá Khuôn Viên Rộng Lớn"
             highlight="MIA COFFEE"
             description="Khuôn viên quán rộng lớn hiếm có, thiết kế nhiều khu vực riêng biệt phù hợp cho mọi lứa tuổi từ trẻ nhỏ, học sinh sinh viên đến gia đình và người lớn tuổi. Có bãi đậu ô tô rộng rãi và bảo vệ trông giữ an ninh chu đáo."
           />
         </div>
+      </div>
 
-        {/* ================= 2. ZONES SHOWCASE (6 KHU VỰC) ================= */}
-        <div className="mb-12">
-          <SectionHeading
-            center
-            icon="grid_view"
-            badge="Chi Tiết Phân Khu"
-            title="6 Khu Vực Trải Nghiệm"
-            highlight="Đặc Sắc"
-            description="Lựa chọn không gian phù hợp với tâm trạng và nhu cầu của bạn mỗi ngày."
-            className="mb-12"
-          />
-        </div>
+      {/* ================= 3D SCROLL-DRIVEN BOOK FLIP ================= */}
+      <SpaceBookFlip />
 
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 mt-4 sm:mt-16">
         {loading ? (
-          <LoadingSpinner text="Đang tải dữ liệu không gian..." />
-        ) : (
-          <div className="space-y-16 mb-24">
-            {zones.map((zone, index) => {
-              const isEven = index % 2 === 1;
-              return (
-                <div
-                  key={zone.id}
-                  id={zone.id}
-                  className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-[#14201a] p-6 sm:p-10 rounded-3xl border border-white/10 shadow-xl ${
-                    isEven ? 'lg:flex-row-reverse' : ''
-                  }`}
-                >
-                  {/* Zone Image */}
-                  <div className={`lg:col-span-7 overflow-hidden rounded-2xl aspect-[16/10] bg-[#0c1410] relative group ${
-                    isEven ? 'lg:order-2' : ''
-                  }`}>
-                    <ImageWithFallback
-                      src={zone.image}
-                      alt={zone.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    {zone.targetAudience && (
-                      <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/15 text-[11px] font-semibold text-[#92f7c3] flex items-center gap-1.5 shadow-lg">
-                        <span className="material-symbols-outlined text-sm">person</span>
-                        <span>{zone.targetAudience}</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Zone Info */}
-                  <div className={`lg:col-span-5 space-y-5 ${isEven ? 'lg:order-1' : ''}`}>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#92f7c3]/15 text-[#92f7c3] text-[11px] font-bold uppercase tracking-wider border border-[#92f7c3]/30">
-                      <span className="material-symbols-outlined text-sm">groups</span>
-                      <span>Quy mô: {zone.capacity}</span>
-                    </div>
-
-                    <h3 className="text-2xl sm:text-3xl font-['Playfair_Display'] text-white font-bold leading-tight">
-                      {zone.name}
-                    </h3>
-
-                    <p className="text-xs text-[#92f7c3] font-medium tracking-wide uppercase">
-                      {zone.tagline}
-                    </p>
-
-                    <p className="text-sm text-white/70 leading-relaxed font-light">
-                      {zone.description}
-                    </p>
-
-                    {/* Features checklist */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2">
-                      {zone.features.map((feat, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-white/80">
-                          <span className="material-symbols-outlined text-sm text-[#92f7c3]">
-                            check_circle
-                          </span>
-                          <span>{feat}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+          <div className="py-20 flex justify-center">
+            <LoadingSpinner text="Đang tải dữ liệu không gian..." />
           </div>
-        )}
-
-        {/* ================= 3. AMENITIES GRID ================= */}
+        ) : (
+          <>
+            {/* ================= 2. AMENITIES GRID ================= */}
         <div className="mb-24">
           <SectionHeading
             center
@@ -159,10 +87,10 @@ export default function Space() {
                 <div className="w-12 h-12 rounded-xl bg-[#1b4332] text-[#92f7c3] flex items-center justify-center shadow">
                   <span className="material-symbols-outlined text-2xl">{item.icon}</span>
                 </div>
-                <h4 className="text-base font-bold text-white font-['Playfair_Display']">
+                <h4 className="text-base font-bold text-white font-['Fraunces']">
                   {item.title}
                 </h4>
-                <p className="text-xs text-white/60 leading-relaxed">
+                <p className="text-xs text-white/80 leading-relaxed">
                   {item.description}
                 </p>
               </div>
@@ -199,7 +127,7 @@ export default function Space() {
                   className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all border ${
                     galleryFilter === btn.id
                       ? 'bg-[#92f7c3] text-[#012d1d] border-[#92f7c3] font-bold'
-                      : 'bg-white/5 text-white/70 border-white/10 hover:border-white/20'
+                      : 'bg-white/5 text-white/85 border-white/10 hover:border-white/20'
                   }`}
                 >
                   {btn.label}
@@ -209,25 +137,25 @@ export default function Space() {
           </div>
 
           {/* Gallery Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
             {gallery.map((photo) => (
               <div
                 key={photo.id}
                 onClick={() => setActivePhoto(photo)}
-                className="group relative aspect-[4/3] rounded-2xl overflow-hidden bg-neutral-900 border border-white/10 cursor-pointer shadow-lg"
+                className="group relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden bg-neutral-900 border border-white/10 cursor-pointer shadow-lg"
               >
                 <ImageWithFallback
-                  src={photo.image}
+                  src={photo.image || photo.image_url}
                   alt={photo.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-2.5 sm:p-5">
                   <div className="flex items-center justify-between w-full">
-                    <span className="text-sm font-semibold text-white">
+                    <span className="text-xs sm:text-sm font-semibold text-white line-clamp-1">
                       {photo.title}
                     </span>
-                    <span className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white">
-                      <span className="material-symbols-outlined text-sm">visibility</span>
+                    <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white shrink-0">
+                      <span className="material-symbols-outlined text-xs sm:text-sm">visibility</span>
                     </span>
                   </div>
                 </div>
@@ -237,9 +165,9 @@ export default function Space() {
         </div>
 
         {/* Direction CTA */}
-        <div className="mt-20 p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#1b4332] to-[#0d1612] border border-[#92f7c3]/30 text-center space-y-6 shadow-2xl">
+        <div id="space-cta" className="mt-20 p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#1b4332] to-[#0d1612] border border-[#92f7c3]/30 text-center space-y-6 shadow-2xl">
           <div className="max-w-xl mx-auto space-y-3">
-            <h3 className="text-2xl sm:text-3xl font-['Playfair_Display'] text-white font-bold">
+            <h3 className="text-2xl sm:text-3xl font-['Fraunces'] text-white font-bold">
               Bạn Muốn Trực Tiếp Trải Nghiệm Không Gian?
             </h3>
             <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-light">
@@ -267,6 +195,8 @@ export default function Space() {
             </a>
           </div>
         </div>
+        </>
+      )}
       </div>
 
       {/* Fullscreen Photo Modal */}
@@ -288,14 +218,14 @@ export default function Space() {
             </button>
             <div className="aspect-[16/10] w-full bg-black">
               <img
-                src={activePhoto.image}
+                src={activePhoto.image || activePhoto.image_url}
                 alt={activePhoto.title}
                 className="w-full h-full object-contain"
               />
             </div>
             <div className="p-6 bg-[#14201a] border-t border-white/10 flex items-center justify-between">
               <div>
-                <h4 className="text-lg font-['Playfair_Display'] text-white font-bold">
+                <h4 className="text-lg font-['Fraunces'] text-white font-bold">
                   {activePhoto.title}
                 </h4>
                 <p className="text-xs text-[#92f7c3] uppercase tracking-wider mt-0.5">

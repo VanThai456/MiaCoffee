@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { brandInfo } from '../data/brandData';
 import { contactService } from '../services/contactService';
 import SectionHeading from '../components/SectionHeading';
@@ -91,10 +91,10 @@ export default function Contact() {
             <div className="w-12 h-12 rounded-2xl bg-[#1b4332] text-[#92f7c3] flex items-center justify-center">
               <span className="material-symbols-outlined text-2xl">pin_drop</span>
             </div>
-            <h4 className="text-base font-bold text-white font-['Playfair_Display']">
+            <h4 className="text-base font-bold text-white font-['Fraunces']">
               Địa Chỉ Quán
             </h4>
-            <p className="text-xs text-white/70 leading-relaxed">
+            <p className="text-xs text-white/85 leading-relaxed">
               {brandInfo.contact.address}
             </p>
             <p className="text-[11px] text-[#92f7c3] font-medium pt-1">
@@ -107,10 +107,10 @@ export default function Contact() {
             <div className="w-12 h-12 rounded-2xl bg-[#1b4332] text-[#92f7c3] flex items-center justify-center">
               <span className="material-symbols-outlined text-2xl">call</span>
             </div>
-            <h4 className="text-base font-bold text-white font-['Playfair_Display']">
+            <h4 className="text-base font-bold text-white font-['Fraunces']">
               Hotline Quán
             </h4>
-            <p className="text-xs text-white/70 leading-relaxed">
+            <p className="text-xs text-white/85 leading-relaxed">
               Tư vấn thực đơn & hỗ trợ thông tin nhanh chóng:
             </p>
             <a
@@ -126,10 +126,10 @@ export default function Contact() {
             <div className="w-12 h-12 rounded-2xl bg-[#1b4332] text-[#92f7c3] flex items-center justify-center">
               <span className="material-symbols-outlined text-2xl">schedule</span>
             </div>
-            <h4 className="text-base font-bold text-white font-['Playfair_Display']">
+            <h4 className="text-base font-bold text-white font-['Fraunces']">
               Giờ Phục Vụ
             </h4>
-            <div className="text-xs text-white/70 space-y-1">
+            <div className="text-xs text-white/85 space-y-1">
               <p><strong>Cả ngày:</strong> {brandInfo.contact.openingHours}</p>
               <p><strong>Điểm tâm sáng:</strong> {brandInfo.contact.breakfastHours}</p>
             </div>
@@ -140,10 +140,10 @@ export default function Contact() {
             <div className="w-12 h-12 rounded-2xl bg-[#1b4332] text-[#92f7c3] flex items-center justify-center">
               <span className="material-symbols-outlined text-2xl">local_parking</span>
             </div>
-            <h4 className="text-base font-bold text-white font-['Playfair_Display']">
+            <h4 className="text-base font-bold text-white font-['Fraunces']">
               Bãi Đỗ Xe Tiện Lợi
             </h4>
-            <p className="text-xs text-white/70 leading-relaxed">
+            <p className="text-xs text-white/85 leading-relaxed">
               {brandInfo.contact.parkingNote}
             </p>
           </div>
@@ -158,7 +158,7 @@ export default function Contact() {
                 <span className="text-xs text-[#92f7c3] uppercase tracking-wider font-bold">
                   Bản Đồ Trực Quan
                 </span>
-                <h3 className="text-xl font-['Playfair_Display'] text-white font-bold">
+                <h3 className="text-xl font-['Fraunces'] text-white font-bold">
                   Vị Trí Quán Trên Google Maps
                 </h3>
               </div>
@@ -208,7 +208,7 @@ export default function Contact() {
                 <span className="material-symbols-outlined text-sm">mark_email_read</span>
                 <span>Hòm Thư Khách Hàng</span>
               </div>
-              <h3 className="text-2xl font-['Playfair_Display'] text-white font-bold">
+              <h3 className="text-2xl font-['Fraunces'] text-white font-bold">
                 Gửi Ý Kiến Đóng Góp
               </h3>
               <p className="text-xs text-white/60 mt-1 leading-relaxed">
@@ -277,19 +277,19 @@ export default function Contact() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-white/80 mb-1.5">
+                <label className="block text-xs font-semibold text-white/85 mb-1.5">
                   Chủ đề phản hồi
                 </label>
                 <select
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  className="input-field bg-[#0c1410]"
+                  className="input-field"
                 >
-                  <option value="Góp ý chất lượng dịch vụ" className="bg-[#14201a]">Góp ý chất lượng dịch vụ</option>
-                  <option value="Góp ý hương vị món ăn / đồ uống" className="bg-[#14201a]">Góp ý hương vị món ăn / đồ uống</option>
-                  <option value="Đặt bàn nhóm đông người" className="bg-[#14201a]">Đặt bàn nhóm đông người</option>
-                  <option value="Liên hệ hợp tác & Sự kiện" className="bg-[#14201a]">Liên hệ hợp tác & Sự kiện</option>
+                  <option value="Góp ý chất lượng dịch vụ">Góp ý chất lượng dịch vụ</option>
+                  <option value="Góp ý hương vị món ăn / đồ uống">Góp ý hương vị món ăn / đồ uống</option>
+                  <option value="Đặt bàn nhóm đông người">Đặt bàn nhóm đông người</option>
+                  <option value="Liên hệ hợp tác & Sự kiện">Liên hệ hợp tác & Sự kiện</option>
                 </select>
               </div>
 

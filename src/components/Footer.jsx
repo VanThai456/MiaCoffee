@@ -1,4 +1,4 @@
-import { brandInfo } from '../data/brandData';
+﻿import { brandInfo } from '../data/brandData';
 
 /**
  * Footer Component
@@ -13,11 +13,11 @@ export default function Footer({ onNavigate }) {
   };
 
   return (
-    <footer className="bg-[#060c08] border-t border-white/10 text-white pt-16 pb-12">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10 items-start">
+    <footer className="bg-[#060c08] border-t border-white/10 text-white pt-10 pb-8 sm:pt-16 sm:pb-12">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-10 pb-8 sm:pb-12 border-b border-white/10 items-start">
           {/* Brand Presentation */}
-          <div className="md:col-span-5 space-y-4">
+          <div className="md:col-span-5 space-y-3 sm:space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full overflow-hidden bg-white/10 border border-white/20 p-1 flex items-center justify-center">
                 <img
@@ -27,26 +27,26 @@ export default function Footer({ onNavigate }) {
                 />
               </div>
               <div>
-                <span className="text-2xl font-['Playfair_Display'] font-bold tracking-wide">
+                <span className="text-xl sm:text-2xl font-['Fraunces'] font-bold tracking-wide">
                   {brandInfo.name}
                 </span>
-                <p className="text-[11px] text-[#92f7c3] tracking-wider uppercase font-semibold">
+                <p className="text-[10px] sm:text-[11px] text-[#92f7c3] tracking-wider uppercase font-semibold">
                   {brandInfo.tagline}
                 </p>
               </div>
             </div>
 
-            <p className="text-xs text-white/60 max-w-sm leading-relaxed">
+            <p className="text-xs text-white/75 max-w-sm leading-relaxed">
               {brandInfo.description}
             </p>
 
-            <div className="flex items-center gap-3 pt-2">
+            <div className="flex items-center gap-3 pt-1 sm:pt-2">
               <a
                 href={brandInfo.contact.facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook MIA COFFEE"
-                className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/80 hover:bg-[#92f7c3] hover:text-[#012d1d] transition-colors"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/80 hover:bg-[#92f7c3] hover:text-[#012d1d] transition-colors"
               >
                 <span className="material-symbols-outlined text-sm">share</span>
               </a>
@@ -55,26 +55,26 @@ export default function Footer({ onNavigate }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Chỉ đường trên Google Maps"
-                className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/80 hover:bg-[#92f7c3] hover:text-[#012d1d] transition-colors"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/80 hover:bg-[#92f7c3] hover:text-[#012d1d] transition-colors"
               >
                 <span className="material-symbols-outlined text-sm">near_me</span>
               </a>
               <a
                 href={`tel:${brandInfo.contact.hotline.replace(/\s+/g, '')}`}
                 aria-label="Gọi điện thoại hotline"
-                className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/80 hover:bg-[#92f7c3] hover:text-[#012d1d] transition-colors"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/80 hover:bg-[#92f7c3] hover:text-[#012d1d] transition-colors"
               >
                 <span className="material-symbols-outlined text-sm">call</span>
               </a>
             </div>
           </div>
 
-          {/* Quick Navigation Links */}
-          <div className="md:col-span-3 space-y-3">
+          {/* Quick Navigation Links - Hidden on mobile as requested */}
+          <div className="hidden md:block md:col-span-3 space-y-3">
             <p className="text-xs uppercase tracking-widest text-[#92f7c3] font-bold">
               Khám Phá
             </p>
-            <ul className="space-y-2 text-xs text-white/60">
+            <ul className="space-y-2 text-xs text-white/75">
               <li>
                 <button
                   type="button"
@@ -124,7 +124,7 @@ export default function Footer({ onNavigate }) {
                 <button
                   type="button"
                   onClick={() => handleLinkClick('admin')}
-                  className="text-[#92f7c3]/70 hover:text-[#92f7c3] transition-colors text-left flex items-center gap-1"
+                  className="text-[#92f7c3]/80 hover:text-[#92f7c3] transition-colors text-left flex items-center gap-1"
                 >
                   <span className="material-symbols-outlined text-[14px]">lock</span>
                   <span>Đăng nhập Quản trị (CMS)</span>
@@ -138,7 +138,7 @@ export default function Footer({ onNavigate }) {
             <p className="text-xs uppercase tracking-widest text-[#92f7c3] font-bold">
               Thông Tin Phục Vụ
             </p>
-            <div className="space-y-2.5 text-xs text-white/70">
+            <div className="space-y-2.5 text-xs text-white/85">
               <p className="flex items-start gap-2">
                 <span className="text-[#92f7c3]">📍</span>
                 <span>{brandInfo.contact.address}</span>
@@ -172,11 +172,8 @@ export default function Footer({ onNavigate }) {
         </div>
 
         {/* Bottom copyright line */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-white/40">
-          <p>© {new Date().getFullYear()} {brandInfo.name}. Cà Phê - Điểm Tâm Sáng. All rights reserved.</p>
-          <p className="uppercase tracking-widest text-[#92f7c3]/60">
-            Không Gian Thân Quen • Thức Uống Đậm Đà
-          </p>
+        <div className="pt-5 sm:pt-8 text-center text-[10px] sm:text-[11px] text-white/65">
+          <p>© {new Date().getFullYear()} {brandInfo.name}. Cà Phê - Điểm Tâm Sáng.</p>
         </div>
       </div>
     </footer>

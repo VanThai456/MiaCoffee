@@ -45,9 +45,14 @@ body {
 /* Typography Hierarchy */
 h1, h2, h3, h4, h5, h6,
 .font-display,
-[class*="Playfair_Display"] {
-  font-family: 'Playfair Display', Georgia, serif !important;
+[class*="Fraunces"],
+[class*="Outfit"],
+[class*="Playfair_Display"],
+.font-fraunces,
+.font-outfit {
+  font-family: 'Fraunces', Georgia, serif !important;
   color: #ffffff;
+  letter-spacing: -0.01em;
 }
 
 body, button, input, select, textarea {
@@ -201,7 +206,13 @@ img {
 }
 
 .input-field::placeholder {
-  color: #6e7d76;
+  color: #94a39b;
+}
+
+/* Base select option styling */
+select option {
+  background-color: #14201a;
+  color: #edece6;
 }
 
 /* Fade In Animation */
@@ -213,3 +224,615 @@ img {
 .animate-fade-in {
   animation: fadeIn 0.4s ease-out forwards;
 }
+
+/* ==========================================================================
+   LIGHT MODE (GIAO DIỆN SÁNG - BAN NGÀY)
+   Warm botanical ivory palette for MIA COFFEE
+   ========================================================================== */
+
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* Base Body & Global Layout */
+html[data-theme="light"] body {
+  background-color: #f7f5f0 !important;
+  color: #14241b !important;
+}
+
+html[data-theme="light"] .min-h-screen.bg-\[\#101915\],
+html[data-theme="light"] div.min-h-screen {
+  background-color: #f7f5f0 !important;
+  color: #14241b !important;
+}
+
+/* Typography Headings */
+html[data-theme="light"] h1,
+html[data-theme="light"] h2,
+html[data-theme="light"] h3,
+html[data-theme="light"] h4,
+html[data-theme="light"] h5,
+html[data-theme="light"] h6,
+html[data-theme="light"] .font-display,
+html[data-theme="light"] [class*="Fraunces"],
+html[data-theme="light"] [class*="Outfit"],
+html[data-theme="light"] [class*="Playfair_Display"],
+html[data-theme="light"] .font-fraunces,
+html[data-theme="light"] .font-outfit {
+  color: #0d2117 !important;
+}
+
+/* Text Hierarchy */
+html[data-theme="light"] .text-white {
+  color: #0d2117 !important;
+}
+html[data-theme="light"] .text-white\/95 {
+  color: #12241b !important;
+}
+html[data-theme="light"] .text-white\/90 {
+  color: #182c21 !important;
+}
+html[data-theme="light"] .text-white\/85 {
+  color: #21352a !important;
+}
+html[data-theme="light"] .text-white\/80 {
+  color: #2b4034 !important;
+}
+html[data-theme="light"] .text-white\/75 {
+  color: #354b3f !important;
+}
+html[data-theme="light"] .text-white\/70 {
+  color: #3e5448 !important;
+}
+html[data-theme="light"] .text-white\/65 {
+  color: #485f52 !important;
+}
+html[data-theme="light"] .text-white\/60 {
+  color: #526a5d !important;
+}
+html[data-theme="light"] .text-white\/50 {
+  color: #627c6e !important;
+}
+html[data-theme="light"] .text-white\/40 {
+  color: #759082 !important;
+}
+
+/* Emerald Accent for High Contrast on Light */
+html[data-theme="light"] .text-\[\#92f7c3\] {
+  color: #007a4d !important;
+}
+html[data-theme="light"] .border-\[\#92f7c3\] {
+  border-color: #007a4d !important;
+}
+html[data-theme="light"] .border-\[\#92f7c3\]\/30,
+html[data-theme="light"] .border-\[\#92f7c3\]\/40,
+html[data-theme="light"] .border-\[\#92f7c3\]\/50,
+html[data-theme="light"] .border-\[\#92f7c3\]\/70 {
+  border-color: rgba(0, 122, 77, 0.35) !important;
+}
+
+/* Surface & Card Backgrounds */
+html[data-theme="light"] .bg-\[\#101915\],
+html[data-theme="light"] .bg-\[\#0a1510\],
+html[data-theme="light"] .bg-\[\#08120e\],
+html[data-theme="light"] .bg-\[\#070e0a\],
+html[data-theme="light"] .bg-\[\#070d0a\],
+html[data-theme="light"] .bg-\[\#09110d\],
+html[data-theme="light"] .bg-\[\#09120e\],
+html[data-theme="light"] .bg-\[\#0d1612\],
+html[data-theme="light"] .bg-\[\#060c08\],
+html[data-theme="light"] .bg-\[\#0c1410\] {
+  background-color: #f7f5f0 !important;
+}
+
+html[data-theme="light"] .bg-\[\#14201a\],
+html[data-theme="light"] .bg-\[\#121d18\],
+html[data-theme="light"] .bg-\[\#111c16\],
+html[data-theme="light"] .bg-neutral-900,
+html[data-theme="light"] .card-botanical {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Floating Number Badge in HighlightsTimeline in Light Mode */
+html[data-theme="light"] .bg-\[\#07130c\] {
+  background-color: #e6f6ee !important;
+  border-color: #007a4d !important;
+  color: #007a4d !important;
+  box-shadow: 0 4px 16px rgba(0, 122, 77, 0.25) !important;
+}
+
+/* Translucent surfaces */
+html[data-theme="light"] .bg-white\/\[0\.02\],
+html[data-theme="light"] .bg-white\/\[0\.03\],
+html[data-theme="light"] .bg-white\/\[0\.04\],
+html[data-theme="light"] .bg-white\/5 {
+  background-color: #efeae0 !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+html[data-theme="light"] .bg-white\/10 {
+  background-color: #e5dfd2 !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Borders */
+html[data-theme="light"] .border-white\/5,
+html[data-theme="light"] .border-white\/10,
+html[data-theme="light"] .border-white\/15,
+html[data-theme="light"] .border-white\/20,
+html[data-theme="light"] .border-white\/25,
+html[data-theme="light"] .border-white\/30 {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Header in Light Mode */
+html[data-theme="light"] header {
+  background-color: rgba(255, 255, 255, 0.94) !important;
+  border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+}
+html[data-theme="light"] header .text-white {
+  color: #0d2117 !important;
+}
+html[data-theme="light"] header .text-white\/70 {
+  color: #42584c !important;
+}
+html[data-theme="light"] header .text-white\/70:hover {
+  color: #007a4d !important;
+}
+
+/* Mobile Drawer in Light Mode */
+html[data-theme="light"] header .md\:hidden.fixed.inset-x-0 {
+  background-color: rgba(255, 255, 255, 0.98) !important;
+  border-bottom-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Footer in Light Mode */
+html[data-theme="light"] footer,
+html[data-theme="light"] footer.bg-\[\#060c08\] {
+  background-color: #ede7dc !important;
+  border-top-color: rgba(0, 0, 0, 0.08) !important;
+  color: #14241b !important;
+}
+html[data-theme="light"] footer .text-white {
+  color: #0d2117 !important;
+}
+html[data-theme="light"] footer .text-white\/60,
+html[data-theme="light"] footer .text-white\/70 {
+  color: #495e52 !important;
+}
+html[data-theme="light"] footer .border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+html[data-theme="light"] footer .bg-white\/5,
+html[data-theme="light"] footer .bg-white\/10 {
+  background-color: #dfd8cb !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #14241b !important;
+}
+
+/* Form Inputs in Light Mode */
+html[data-theme="light"] input,
+html[data-theme="light"] textarea,
+html[data-theme="light"] select,
+html[data-theme="light"] .input-field {
+  background-color: #ffffff !important;
+  color: #0d2117 !important;
+  border-color: rgba(0, 0, 0, 0.14) !important;
+}
+html[data-theme="light"] select option {
+  background-color: #ffffff !important;
+  color: #0d2117 !important;
+}
+html[data-theme="light"] input::placeholder,
+html[data-theme="light"] textarea::placeholder {
+  color: #627c6e !important;
+}
+
+/* Modals & Dialogs in Light Mode (ProductModal & Fullscreen Photo) */
+html[data-theme="light"] div[role="dialog"] .bg-\[\#121d18\],
+html[data-theme="light"] .fixed.inset-0 .bg-\[\#121d18\] {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.22) !important;
+}
+html[data-theme="light"] div[role="dialog"] h2,
+html[data-theme="light"] div[role="dialog"] h4,
+html[data-theme="light"] .fixed.inset-0 .bg-\[\#121d18\] h2,
+html[data-theme="light"] .fixed.inset-0 .bg-\[\#121d18\] h4 {
+  color: #0d2117 !important;
+}
+html[data-theme="light"] div[role="dialog"] .bg-white\/5,
+html[data-theme="light"] .fixed.inset-0 .bg-\[\#121d18\] .bg-white\/5 {
+  background-color: #f7f3ea !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+html[data-theme="light"] div[role="dialog"] .bg-black\/60,
+html[data-theme="light"] .fixed.inset-0 .bg-black\/70,
+html[data-theme="light"] .fixed.inset-0 .bg-black\/60 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  color: #0d2117 !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+html[data-theme="light"] div[role="dialog"] .bg-black\/60:hover,
+html[data-theme="light"] .fixed.inset-0 .bg-black\/70:hover {
+  background-color: #ffffff !important;
+  color: #007a4d !important;
+}
+
+/* ================= SPECIFIC SECTIONS FIX FOR LIGHT THEME ================= */
+
+/* Section 2: Highlights Timeline River Arc in Light Mode */
+html[data-theme="light"] #gioi-thieu svg path:first-of-type {
+  stroke: rgba(0, 0, 0, 0.1) !important;
+}
+html[data-theme="light"] #gioi-thieu svg path:nth-of-type(2) {
+  stroke: #007a4d !important;
+}
+html[data-theme="light"] #gioi-thieu svg circle[fill="#92f7c3"] {
+  fill: #007a4d !important;
+}
+
+/* Section 3: Rotating Menu Morph in Light Mode */
+html[data-theme="light"] #menu-noi-bat {
+  background-color: #f7f5f0 !important;
+  background-image: none !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+/* Completely hide dark coffeehouse background photo and dark green gradient layers in day mode */
+html[data-theme="light"] #menu-noi-bat .morph-bg-image {
+  display: none !important;
+}
+html[data-theme="light"] #menu-noi-bat .morph-gradient-top,
+html[data-theme="light"] #menu-noi-bat .morph-gradient-bottom,
+html[data-theme="light"] #menu-noi-bat .morph-radial-vignette {
+  display: none !important;
+}
+html[data-theme="light"] #menu-noi-bat div[class*="bg-gradient-to-b"],
+html[data-theme="light"] #menu-noi-bat div[class*="bg-gradient-to-t"],
+html[data-theme="light"] #menu-noi-bat div[class*="radial-gradient(ellipse"] {
+  display: none !important;
+}
+html[data-theme="light"] #menu-noi-bat .morph-ambient-amber {
+  opacity: 0.12 !important;
+}
+html[data-theme="light"] #menu-noi-bat .morph-ambient-mint {
+  opacity: 0.1 !important;
+}
+html[data-theme="light"] #menu-noi-bat .morph-grid {
+  opacity: 0.08 !important;
+}
+/* Section 3 Morph Product Cards */
+html[data-theme="light"] #menu-noi-bat .morph-card,
+html[data-theme="light"] #menu-noi-bat .bg-\[\#111c16\]\/95 {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07) !important;
+}
+html[data-theme="light"] #menu-noi-bat .morph-photo-bg,
+html[data-theme="light"] #menu-noi-bat .aspect-\[16\/11\] {
+  background-color: #efeae0 !important;
+}
+html[data-theme="light"] #menu-noi-bat .morph-photo-overlay {
+  display: none !important;
+}
+html[data-theme="light"] #menu-noi-bat .morph-price-badge,
+html[data-theme="light"] #menu-noi-bat .bg-black\/85 {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  color: #007a4d !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+html[data-theme="light"] #menu-noi-bat h2,
+html[data-theme="light"] #menu-noi-bat h4 {
+  color: #0d2117 !important;
+}
+html[data-theme="light"] #menu-noi-bat .text-white\/50 {
+  color: #586f63 !important;
+}
+
+/* Section 5: Thông Tin Quán & Bản Đồ in Light Mode */
+html[data-theme="light"] #thong-tin,
+html[data-theme="light"] section[id="thong-tin"] {
+  background: #f7f5f0 !important;
+  background-image: none !important;
+}
+html[data-theme="light"] #thong-tin .thong-tin-card,
+html[data-theme="light"] #thong-tin [class*="bg-gradient-to-br from-white"] {
+  background: #ffffff !important;
+  background-image: none !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.05) !important;
+}
+html[data-theme="light"] #thong-tin .thong-tin-box,
+html[data-theme="light"] #thong-tin .bg-black\/40 {
+  background-color: #f5f0e6 !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+}
+html[data-theme="light"] #thong-tin .bg-white\/10 {
+  background-color: #e5ded2 !important;
+  color: #007a4d !important;
+}
+
+/* Section 6: Tuyển Dụng Callout Banner in Home.jsx */
+html[data-theme="light"] #tuyen-dung-callout {
+  background-color: transparent !important;
+  background-image: none !important;
+  border-top-color: transparent !important;
+}
+html[data-theme="light"] #tuyen-dung-callout h4 {
+  color: #0d2117 !important;
+}
+html[data-theme="light"] #tuyen-dung-callout p {
+  color: #495e52 !important;
+}
+html[data-theme="light"] #tuyen-dung-callout button,
+html[data-theme="light"] section[class*="bg-[#09120e]"] button {
+  background-color: #007a4d !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+
+/* Unified Callout Banners across Space, Recruitment, Menu & ProductDetail */
+html[data-theme="light"] #space-cta,
+html[data-theme="light"] #recruitment-callout,
+html[data-theme="light"] #menu-bottom-callout,
+html[data-theme="light"] #product-quote-box,
+html[data-theme="light"] div[class*="from-[#1b4332]"],
+html[data-theme="light"] div[class*="from-[#173024]"],
+html[data-theme="light"] div[class*="from-[#14201a] to-[#1a2f26]"],
+html[data-theme="light"] div[class*="from-[#14201a] to-[#1c3026]"] {
+  background: linear-gradient(135deg, #e7f4ed 0%, #f6f0e6 100%) !important;
+  border-color: rgba(0, 122, 77, 0.22) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04) !important;
+}
+html[data-theme="light"] #space-cta h3,
+html[data-theme="light"] #recruitment-callout h3,
+html[data-theme="light"] #menu-bottom-callout h4,
+html[data-theme="light"] #product-quote-box p,
+html[data-theme="light"] div[class*="from-[#1b4332]"] h3,
+html[data-theme="light"] div[class*="from-[#173024]"] h3,
+html[data-theme="light"] div[class*="from-[#14201a] to-[#1a2f26]"] h4 {
+  color: #0d2117 !important;
+}
+html[data-theme="light"] #space-cta p,
+html[data-theme="light"] #recruitment-callout p,
+html[data-theme="light"] #menu-bottom-callout p,
+html[data-theme="light"] div[class*="from-[#1b4332]"] p,
+html[data-theme="light"] div[class*="from-[#173024]"] p,
+html[data-theme="light"] div[class*="from-[#14201a] to-[#1a2f26]"] p {
+  color: #3e5347 !important;
+}
+html[data-theme="light"] #recruitment-callout .bg-black\/40,
+html[data-theme="light"] div[class*="from-[#173024]"] .bg-black\/40 {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 122, 77, 0.2) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Green Notice Badges & Icon Containers */
+html[data-theme="light"] .bg-\[\#1b4332\],
+html[data-theme="light"] div[class*="bg-[#1b4332]"],
+html[data-theme="light"] span[class*="bg-[#1b4332]"] {
+  background-color: #e5f4ec !important;
+  color: #007a4d !important;
+  border-color: rgba(0, 122, 77, 0.25) !important;
+}
+html[data-theme="light"] div[class*="bg-[#1b4332]/60"] {
+  background-color: #e5f4ec !important;
+  border-color: rgba(0, 122, 77, 0.3) !important;
+  color: #007a4d !important;
+}
+
+/* Product Cards & Space Zone Cards in Light Mode */
+html[data-theme="light"] article,
+html[data-theme="light"] div[class*="bg-[#14201a]"] {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04) !important;
+}
+html[data-theme="light"] div[class*="bg-[#0c1410]"],
+html[data-theme="light"] div[class*="bg-[#0a1510]"],
+html[data-theme="light"] div[class*="bg-[#0d1612]"] {
+  background-color: #efeae0 !important;
+}
+
+/* Product Price Tags on Photo Overlay */
+html[data-theme="light"] article .bg-\[\#0a1510\]\/90 {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  color: #007a4d !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Inactive Filter & Option Buttons */
+html[data-theme="light"] button[class*="bg-white/5"] {
+  background-color: #ede7dc !important;
+  color: #495e52 !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+html[data-theme="light"] button[class*="bg-white/5"]:hover {
+  background-color: #e5dfd2 !important;
+  color: #0d2117 !important;
+}
+
+/* Secondary Action Buttons (Hotline / Call buttons) in Light Mode */
+html[data-theme="light"] .btn-secondary,
+html[data-theme="light"] a.btn-secondary,
+html[data-theme="light"] button.btn-secondary {
+  background-color: #ffffff !important;
+  color: #007a4d !important;
+  border: 1.5px solid rgba(0, 122, 77, 0.45) !important;
+  box-shadow: 0 4px 14px rgba(0, 122, 77, 0.1) !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="light"] .btn-secondary span,
+html[data-theme="light"] a.btn-secondary span,
+html[data-theme="light"] button.btn-secondary span {
+  color: #007a4d !important;
+}
+
+html[data-theme="light"] .btn-secondary:hover,
+html[data-theme="light"] a.btn-secondary:hover,
+html[data-theme="light"] button.btn-secondary:hover {
+  background-color: #007a4d !important;
+  color: #ffffff !important;
+  border-color: #007a4d !important;
+  box-shadow: 0 6px 20px rgba(0, 122, 77, 0.28) !important;
+}
+
+html[data-theme="light"] .btn-secondary:hover span,
+html[data-theme="light"] a.btn-secondary:hover span,
+html[data-theme="light"] button.btn-secondary:hover span {
+  color: #ffffff !important;
+}
+
+/* Callout Banners in Light Mode */
+html[data-theme="light"] #space-cta,
+html[data-theme="light"] #recruitment-callout,
+html[data-theme="light"] #menu-bottom-callout,
+html[data-theme="light"] #product-quote-box {
+  background-image: linear-gradient(135deg, #f7f5f0, #ede7dc) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Photo Overlays: MUST be hidden in Light Mode so product & gallery images are 100% visible, vibrant & crisp */
+html[data-theme="light"] .card-ambient-overlay,
+html[data-theme="light"] .morph-photo-overlay,
+html[data-theme="light"] .modal-photo-overlay {
+  display: none !important;
+}
+
+/* Ensure all product photos and gallery images are always visible, sharp and uncovered */
+html[data-theme="light"] article img,
+html[data-theme="light"] .morph-card img,
+html[data-theme="light"] .aspect-\[16\/10\] img,
+html[data-theme="light"] .aspect-\[16\/9\] img,
+html[data-theme="light"] .aspect-\[21\/9\] img,
+html[data-theme="light"] .aspect-\[4\/3\] img,
+html[data-theme="light"] .aspect-square img {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* ==========================================================================
+   PRESERVE WHITE & MINT TEXT ON DARK PHOTO OVERLAYS IN LIGHT MODE
+   Ensures text over photos, black gradients and dark badges never turns dark
+   ========================================================================== */
+
+/* 1. Hero Banner */
+html[data-theme="light"] .hero-banner h1,
+html[data-theme="light"] .hero-banner .hero-title,
+html[data-theme="light"] .hero-banner p,
+html[data-theme="light"] .hero-banner .text-white,
+html[data-theme="light"] .hero-banner .text-white\/95 {
+  color: #ffffff !important;
+}
+
+/* 2. Bento Lookbook Cards in Home.jsx (#khong-gian) */
+html[data-theme="light"] #khong-gian .group.relative h3,
+html[data-theme="light"] #khong-gian .group.relative p.text-white,
+html[data-theme="light"] #khong-gian .group.relative p.text-white\/70,
+html[data-theme="light"] #khong-gian .group.relative .text-white,
+html[data-theme="light"] #khong-gian .group.relative .text-white\/70,
+html[data-theme="light"] #khong-gian [class*="from-black"] ~ div h3,
+html[data-theme="light"] #khong-gian [class*="from-black"] ~ div p:not(.text-\[\#92f7c3\]),
+html[data-theme="light"] #khong-gian [class*="from-black"] ~ div span {
+  color: #ffffff !important;
+}
+html[data-theme="light"] #khong-gian .group.relative p.text-\[\#92f7c3\],
+html[data-theme="light"] #khong-gian [class*="from-black"] ~ div p.text-\[\#92f7c3\] {
+  color: #92f7c3 !important;
+}
+
+/* 3. Space Gallery Photo Cards Hover Overlay (#khong-gian in Space.jsx) */
+html[data-theme="light"] .group.relative .from-black\/80 span,
+html[data-theme="light"] .group.relative .from-black\/80 p,
+html[data-theme="light"] .group.relative [class*="from-black"] span,
+html[data-theme="light"] .group.relative [class*="from-black"] p {
+  color: #ffffff !important;
+}
+
+/* 4. Out-of-Stock Badges (Red 900 Backgrounds) */
+html[data-theme="light"] .bg-red-900\/80,
+html[data-theme="light"] .bg-red-900\/90,
+html[data-theme="light"] [class*="bg-red-900"] {
+  color: #ffffff !important;
+}
+html[data-theme="light"] .bg-red-900\/80 span,
+html[data-theme="light"] .bg-red-900\/90 span,
+html[data-theme="light"] [class*="bg-red-900"] span {
+  color: #ffffff !important;
+}
+
+/* 5. Space Book Flip Landscape Corner Tag & Back Cover */
+html[data-theme="light"] #khong-gian-cuon-sach .bg-black\/70,
+html[data-theme="light"] #khong-gian-cuon-sach .bg-black\/70 span {
+  color: #ffffff !important;
+}
+html[data-theme="light"] #khong-gian-cuon-sach .bg-black\/70 span.bg-\[\#92f7c3\] {
+  background-color: #92f7c3 !important;
+}
+html[data-theme="light"] #khong-gian-cuon-sach [class*="from-[#0e271a]"] h4,
+html[data-theme="light"] #khong-gian-cuon-sach [class*="from-[#0e271a]"] span {
+  color: #92f7c3 !important;
+}
+
+/* 6. Generic Card & Lookbook Protection */
+html[data-theme="light"] .relative.h-\[78vh\] h2,
+html[data-theme="light"] .relative.h-\[78vh\] h3,
+html[data-theme="light"] .relative.h-\[78vh\] p,
+html[data-theme="light"] .relative.aspect-\[4\/3\] .text-white,
+html[data-theme="light"] .relative.aspect-\[16\/11\] .text-white,
+html[data-theme="light"] .relative.aspect-\[3\/4\] .text-white,
+html[data-theme="light"] .relative.h-\[78vh\] .text-\[\#f7ebd7\] {
+  color: #f7ebd7 !important;
+}
+html[data-theme="light"] .relative.h-\[78vh\] .text-\[\#ffeedb\] {
+  color: #ffeedb !important;
+}
+html[data-theme="light"] .relative.h-\[78vh\] .text-\[\#e8faf2\] {
+  color: #e8faf2 !important;
+}
+html[data-theme="light"] .relative.h-\[78vh\] .text-\[\#faf6ec\] {
+  color: #faf6ec !important;
+}
+
+/* Light Scrollbar */
+html[data-theme="light"] ::-webkit-scrollbar-track {
+  background: #f7f5f0;
+}
+html[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #d4cdc1;
+}
+html[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: #b5ac9d;
+}
+
+/* ==========================================================================
+   3D BOOK FLIP TYPOGRAPHY & CONTRAST (Light & Dark Theme Safe)
+   ========================================================================== */
+#khong-gian-cuon-sach h1 {
+  color: #92f7c3 !important;
+}
+#khong-gian-cuon-sach h4 {
+  color: #92f7c3 !important;
+}
+#khong-gian-cuon-sach h2,
+#khong-gian-cuon-sach h3 {
+  color: #0d2117 !important;
+}
+html[data-theme="light"] #khong-gian-cuon-sach h1,
+html[data-theme="light"] #khong-gian-cuon-sach h4 {
+  color: #92f7c3 !important;
+}
+html[data-theme="light"] #khong-gian-cuon-sach h2,
+html[data-theme="light"] #khong-gian-cuon-sach h3 {
+  color: #0d2117 !important;
+}
+

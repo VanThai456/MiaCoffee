@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+﻿import { useEffect } from 'react';
 import ImageWithFallback from './ImageWithFallback';
 
 /**
@@ -74,7 +74,7 @@ export default function ProductModal({ product, onClose }) {
               alt={name}
               className="absolute inset-0 w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#121d18] via-transparent to-transparent opacity-90 pointer-events-none" />
+            <div className="modal-photo-overlay absolute inset-0 bg-gradient-to-t from-[#121d18] via-transparent to-transparent opacity-90 pointer-events-none" />
 
             {badge && (
               <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-[#92f7c3] text-[#012d1d] text-xs font-bold uppercase tracking-wider shadow">
@@ -88,7 +88,7 @@ export default function ProductModal({ product, onClose }) {
             {/* Header: Title & Price */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
               <div>
-                <h2 className="text-2xl sm:text-3xl font-['Playfair_Display'] text-white font-bold">
+                <h2 className="text-2xl sm:text-3xl font-['Fraunces'] text-white font-bold">
                   {name}
                 </h2>
                 {subName && (
@@ -104,10 +104,10 @@ export default function ProductModal({ product, onClose }) {
 
             {/* Description */}
             <div className="space-y-2">
-              <h4 className="text-xs uppercase tracking-widest text-white/50 font-bold">
+              <h4 className="text-xs uppercase tracking-widest text-white/75 font-bold">
                 Mô tả hương vị
               </h4>
-              <p className="text-sm sm:text-base text-white/80 leading-relaxed">
+              <p className="text-sm sm:text-base text-white/90 leading-relaxed">
                 {fullDescription || description}
               </p>
             </div>
@@ -115,7 +115,7 @@ export default function ProductModal({ product, onClose }) {
             {/* Structured Spec Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-white/5 p-4 rounded-2xl border border-white/10 text-xs sm:text-sm">
               <div className="space-y-1">
-                <span className="text-white/50 uppercase tracking-wider text-[11px] font-semibold flex items-center gap-1.5">
+                <span className="text-white/75 uppercase tracking-wider text-[11px] font-semibold flex items-center gap-1.5">
                   <span className="material-symbols-outlined text-sm text-[#92f7c3]">tune</span>
                   Hình thức phục vụ
                 </span>
@@ -125,7 +125,7 @@ export default function ProductModal({ product, onClose }) {
               </div>
 
               <div className="space-y-1">
-                <span className="text-white/50 uppercase tracking-wider text-[11px] font-semibold flex items-center gap-1.5">
+                <span className="text-white/75 uppercase tracking-wider text-[11px] font-semibold flex items-center gap-1.5">
                   <span className="material-symbols-outlined text-sm text-[#92f7c3]">eco</span>
                   Nguyên liệu tuyển chọn
                 </span>
@@ -141,7 +141,7 @@ export default function ProductModal({ product, onClose }) {
                 {tags.map((tag, idx) => (
                   <span
                     key={idx}
-                    className="px-3 py-1 rounded-full bg-white/5 text-white/70 border border-white/10 text-xs"
+                    className="px-3 py-1 rounded-full bg-white/5 text-white/85 border border-white/10 text-xs"
                   >
                     #{tag}
                   </span>
@@ -151,7 +151,7 @@ export default function ProductModal({ product, onClose }) {
 
             {/* Action Bar */}
             <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-2 text-xs text-white/60">
+              <div className="flex items-center gap-2 text-xs text-white/80">
                 <span className="material-symbols-outlined text-base text-[#92f7c3]">info</span>
                 <span>Phục vụ tươi mới mỗi ngày tại MIA COFFEE</span>
               </div>

@@ -50,7 +50,7 @@ export default function AdminLogin({ onLoginSuccess, onBackToSite }) {
               className="w-full h-full object-contain rounded-full"
             />
           </div>
-          <h2 className="text-2xl font-['Playfair_Display'] text-white font-bold tracking-wide">
+          <h2 className="text-2xl font-['Fraunces'] text-white font-bold tracking-wide">
             {brandInfo.name} CMS
           </h2>
           <p className="text-xs text-[#92f7c3] uppercase tracking-widest font-semibold">
@@ -85,38 +85,28 @@ export default function AdminLogin({ onLoginSuccess, onBackToSite }) {
             <label className="block text-xs font-semibold text-white/80 mb-1.5">
               Email Quản Trị
             </label>
-            <div className="relative">
-              <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 text-lg">
-                alternate_email
-              </span>
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@miacoffee.vn"
-                className="input-field pl-10"
-              />
-            </div>
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="admin@miacoffee.vn"
+              className="input-field"
+            />
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-white/80 mb-1.5">
               Mật Khẩu
             </label>
-            <div className="relative">
-              <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 text-lg">
-                lock
-              </span>
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="input-field pl-10"
-              />
-            </div>
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              className="input-field"
+            />
           </div>
 
           <button

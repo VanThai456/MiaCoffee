@@ -1,5 +1,6 @@
-﻿import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ImageWithFallback from './ImageWithFallback';
+import { resolveAssetUrl } from '../utils/imageUrlHelper';
 
 /**
  * RotatingMenuMorph Component
@@ -114,7 +115,7 @@ export default function RotatingMenuMorph({ products = [], onViewDetail }) {
         {/* Layer 1: Cinematic Coffeehouse Atmospheric Background Image */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden morph-bg-layer">
           <img
-            src="/images/menu-section-bg.jpg"
+            src={resolveAssetUrl('/images/menu-section-bg.jpg')}
             alt=""
             className="morph-bg-image w-full h-full object-cover object-center filter brightness-[0.72] contrast-[1.08] saturate-[1.15]"
             style={{

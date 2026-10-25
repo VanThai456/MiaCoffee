@@ -1,3 +1,5 @@
+import { resolveAssetUrl } from '../utils/imageUrlHelper';
+
 /**
  * Brand Information & Structured Configuration for MIA COFFEE
  * Easily replaceable via REST API in future backend integration
@@ -37,7 +39,7 @@ export const brandInfo = {
         "Nhân viên bảo vệ dắt xe & trông coi chu đáo",
         "Hoàn toàn an toàn và miễn phí 100%"
       ],
-      image: "/images/bai-do-xe.jpg",
+      image: resolveAssetUrl('/images/bai-do-xe.jpg'),
       objectPosition: "center"
     },
     {
@@ -51,7 +53,7 @@ export const brandInfo = {
         "Ổ cắm điện & Wi-Fi cáp quang từng vị trí",
         "Bàn ghế chuẩn công thái học ngồi lâu thoải mái"
       ],
-      image: "/images/phong-lanh.jpg",
+      image: resolveAssetUrl('/images/phong-lanh.jpg'),
       objectPosition: "center"
     },
     {
@@ -65,7 +67,7 @@ export const brandInfo = {
         "Thanh âm nước róc rách mang lại cảm giác an yên",
         "Góc check-in chụp ảnh ấn tượng cho cả gia đình"
       ],
-      image: "/images/ho-ca.jpg",
+      image: resolveAssetUrl('/images/ho-ca.jpg'),
       objectPosition: "center"
     },
     {
@@ -79,7 +81,7 @@ export const brandInfo = {
         "Tán cây xanh mát rượi quanh năm trong lành",
         "Khu vui chơi cầu trượt xích đu cho các bé"
       ],
-      image: "/images/khong-gian-thoang-mat.jpg",
+      image: resolveAssetUrl('/images/khong-gian-thoang-mat.jpg'),
       objectPosition: "center"
     }
   ],

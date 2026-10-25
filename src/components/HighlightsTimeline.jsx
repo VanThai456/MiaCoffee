@@ -1,4 +1,5 @@
 import { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
+import { resolveAssetUrl } from '../utils/imageUrlHelper';
 
 /**
  * Build a smooth S-curve connecting the centers of the alternating circular frames.
@@ -232,7 +233,7 @@ export default function HighlightsTimeline({ items }) {
                   {/* Circular Image Container - Seamless full-bleed circle */}
                   <div className="w-full h-full rounded-full overflow-hidden relative border-2 border-white/30 shadow-inner flex items-center justify-center">
                     <img
-                      src={item.image}
+                      src={resolveAssetUrl(item.image)}
                       alt={item.title}
                       className="absolute inset-0 w-full h-full object-cover object-center scale-100 group-hover:scale-110 transition-transform duration-700 ease-out"
                       style={{
@@ -241,11 +242,14 @@ export default function HighlightsTimeline({ items }) {
                         maxWidth: 'none',
                         maxHeight: 'none',
                         objectFit: 'cover',
-                        objectPosition: '50% 50%'
+                        objectPosition: item.objectPosition || '50% 50%'
                       }}
                       loading="lazy"
                       referrerPolicy="no-referrer"
                       onLoad={updateGeometry}
+                      onError={(e) => {
+                        console.warn(`[HighlightsTimeline] Image load error: ${item.image}`);
+                      }}
                     />
                   </div>
                 </div>
